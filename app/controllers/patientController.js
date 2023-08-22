@@ -1,4 +1,3 @@
-const { user } = require('../../config/mail-service');
 const sendMessage = require('../services/mailService');
 
 // Load Input Validation
