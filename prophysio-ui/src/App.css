@@ -1,0 +1,94 @@
+nav {
+    z-index: 0;
+}
+
+.fc-event {
+    cursor: pointer;
+}
+
+.fc-toolbar-chunk [type="button"] {
+    background-color: transparent;
+    color: #000;
+    transition: 0.4s;
+}
+
+.fc-toolbar-chunk [type="button"]:hover {
+    background-color: #DDD;
+}
+
+.fc-toolbar-chunk [type="button"]:active {
+    background-color: #BBB;
+    box-shadow: none;
+}
+
+.fc-toolbar-chunk [type="button"]:focus {
+    box-shadow: none;
+}
+
+.fc-toolbar-chunk [type="button"]:disabled {
+    background-color: transparent;
+    color: #000;
+    transition: 0.2s;
+}
+
+.bgimg {
+    background-image: url('https://source.unsplash.com/random?healthcare');
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    color: #FFF;
+    font-family: "Calibri";
+    font-weight: bold;
+    font-style: italic;
+    font-size: 36px;
+    text-shadow: 4px 4px 4px #000;
+}
+
+.topleft {
+    position: absolute;
+    top: 0;
+    left: 16px;
+}
+
+.bottomleft {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+}
+
+.middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle h1 {
+    font-family: "Consolas";
+}
+
+.middle hr {
+    margin: auto;
+    width: 40vw;
+}
+
+.getting-started {
+    padding: 0 5%;
+}
+
+@media screen and (max-width: 600px) {
+
+    .fc-header-toolbar.fc-toolbar {
+        display: block;
+    }
+
+    .middle hr {
+        margin: auto;
+        width: 80vw;
+    }
+}

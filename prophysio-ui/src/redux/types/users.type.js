@@ -1,0 +1,1 @@
+export const GET_USERS = '[PROPHYSIO] GET_USERS';
