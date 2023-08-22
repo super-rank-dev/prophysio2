@@ -40,7 +40,7 @@ exports.registerAppointment = async (req, res) => {
     const room = await Room.findById(appointment.roomId);
     const patient = await Patient.findById(appointment.patientId);
 
-    const theme = readFileSync('../reminder/appointment-new.ejs', 'utf8');
+    const theme = readFileSync('./reminder/appointment-new.ejs', 'utf8');
     const content = ejs.render(theme, {
         service,
         branch,
