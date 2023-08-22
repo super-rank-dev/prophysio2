@@ -1,7 +1,9 @@
+const { readFileSync } = require('fs');
+const ejs = require('ejs');
+
 // Load Input Validation
 const validateAppointmentInput = require('../validation/appointment');
 
-const user = require('../../config/mail-service');
 const sendMessage = require('../services/mailService');
 
 // Load Appointment model
@@ -37,14 +39,21 @@ exports.registerAppointment = async (req, res) => {
     const practitioner = await User.findById(appointment.practitionerId);
     const room = await Room.findById(appointment.roomId);
     const patient = await Patient.findById(appointment.patientId);
+
+    const theme = readFileSync('../reminder/appointment-new.ejs', 'utf8');
+    const content = ejs.render(theme, {
+        service,
+        branch,
+        practitioner,
+        room,
+        patient
+    });
     // Define the email message
     const message = {
-        from: user,
-        to: patient.email,
+        dest: patient.email,
         subject: 'Prophysio v1.0 Appointment',
-        text: `Appointment Confirmed`
+        content
     };
-    console.log(message);
     sendMessage(message);
 }
 

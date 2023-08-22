@@ -1,26 +1,15 @@
-const nodemailer = require('nodemailer');
-const { user, password } = require('../../config/mail-service');
+const { exec } = require('child_process');
 
-// Create a transporter using SMTP configuration for Outlook
-const transporter = nodemailer.createTransport({
-    host: 'smtp.office365.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: user,
-        pass: password
-    }
-});
+const sendMessage = ({dest, subject, content}) => {
+    const command = `echo "${content}" | sendmail -f sender@example.com -t ${dest} -s "${subject}" -a "Content-Type: text/html"`;
 
-// Send the email
-const sendMessage = (message) => {
-    // transporter.sendMail(message, function (error, info) {
-    //     if (error) {
-    //         console.log('Error occurred:', error.message);
-    //     } else {
-    //         console.log('Email sent successfully!', info.response);
-    //     }
-    // });
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            return;
+        }
+        console.log('Email sent successfully!');
+    });
 };
 
 module.exports = sendMessage;
