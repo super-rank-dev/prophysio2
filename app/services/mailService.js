@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 
-const sendMessage = ({dest, subject, content}) => {
-    const command = `echo "${content}" | sendmail -f sender@example.com -t ${dest} -s "${subject}" -a "Content-Type: text/html"`;
+const sendMessage = ({ dest, subject, content }) => {
+    const command = `echo "${content}" | mail -s "${subject}" -a "Content-type: text/html" ${dest}`;
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
