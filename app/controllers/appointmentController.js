@@ -52,7 +52,7 @@ exports.registerAppointment = async (req, res) => {
     const message = {
         dest: patient.email,
         subject: 'Prophysio v1.0 Appointment',
-        content
+        content: content.replace(/[\n\r\s]/g, "")
     };
     sendMessage(message);
 }
