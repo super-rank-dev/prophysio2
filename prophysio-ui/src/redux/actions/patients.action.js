@@ -40,9 +40,9 @@ export const addPatient = (patient, handleClose) => dispatch => {
 };
 
 // Confirm Registration
-export const confirmRegistration = (patientId, application) => dispatch => {
+export const confirmRegistration = (patientId, registrationForm) => dispatch => {
     axios
-        .post(`${SERVER_ADDRESS}/api/patients/confirm`, { patientId, application })
+        .post(`${SERVER_ADDRESS}/api/patients/confirm`, { patientId, registrationForm })
         .then(res => {
             dispatch({
                 type: CONFIRM_REGISTRATION,

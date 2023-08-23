@@ -1,4 +1,4 @@
-export const ApplicationStatus = {
+export const RegistrationFormStatus = {
     PENDING: 'ADD_PATIENT_REQUEST_PENDING',
     ACCEPTED: 'ADD_PATIENT_REQUEST_ACCEPTED'
 }
@@ -17,7 +17,7 @@ export const AppointmentBgColor = {
     [AppointmentStatus.CANCELLED]: '#FF8080',
 }
 
-export const PatientApplicationViewMode = {
+export const PatientRegistrationFormViewMode = {
     DOCTOR: 'PATIENT_APPLICATION_DOCTOR_VIEW',
     PATIENT: 'PATIENT_APPLICATION_PATIENT_VIEW'
 }
@@ -33,3 +33,47 @@ export const CalendarViewMode = {
     WEEK: 'timeGridWeek',
     DAY: 'timeGridDay'
 }
+
+export const IntakeFormStatus = {
+    UNKNOWN: 'INTAKE_FORM_UNKNOWN',
+    PENDING: 'INTAKE_FORM_PENDING',
+    ACCEPTED: 'INTAKE_FORM_ACCEPTED'
+}
+
+export const BodyPart = [
+    'Shoulder',
+    'Elbow',
+    'Wrist',
+    'Fingers/Hand'
+]
+
+export const Questionnaire = [
+    'Dash Questionnaire',
+    'Quick Dash',
+    'Patient Specfic Functional Scale'
+]
+
+export const Objective = [
+    'Palpation',
+    'Girth measurements',
+    'AROM',
+    'PROM',
+    'END FEEL',
+    'Joint Play',
+    'MMT',
+    'RIM',
+    'Special Test'
+]
+
+export const SpecialTest = [
+    'Empty Can',
+    'Apprehension Test',
+    'Painful arc',
+    'ULTT',
+    'Hawkins/Kenedy',
+    'Speeds Test',
+    'Varus/Valgus',
+    'Maudley',
+    'Mills',
+    'ULTT'
+]

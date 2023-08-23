@@ -5,8 +5,8 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import PatientApplication from './PatientApplication';
-import { PatientApplicationViewMode } from '../../config/enum';
+import PatientRegistrationForm from './PatientRegistrationForm';
+import { PatientRegistrationFormViewMode } from '../../config/enum';
 
 const defaultTheme = createTheme();
 
@@ -43,8 +43,8 @@ const PatientPortal = () => {
                         }}
                     >
                         <Box sx={{ mt: 1, width: '100%' }}>
-                            <PatientApplication
-                                mode={PatientApplicationViewMode.PATIENT}
+                            <PatientRegistrationForm
+                                mode={PatientRegistrationFormViewMode.PATIENT}
                                 patientId={patientId}
                             />
                         </Box>

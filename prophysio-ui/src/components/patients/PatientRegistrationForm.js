@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import { Avatar, Box, Button, Chip, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { countries } from "countries-list";
-import { IdType, PatientApplicationViewMode } from "../../config/enum";
-import Application from '../../models/application.model';
+import { IdType, PatientRegistrationFormViewMode } from "../../config/enum";
+import RegistrationForm from '../../models/registration_form.model';
 import * as Actions from '../../redux/actions';
 
 const countryCodes = Object.keys(countries);
@@ -12,16 +12,16 @@ const PatientPortal = ({ mode, patientId }) => {
 
     const dispatch = useDispatch();
 
-    const onSubmitApplication = (event) => {
+    const onSubmitRegistrationForm = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const application = new Application(data);
-        dispatch(Actions.confirmRegistration(patientId, application));
+        const registrationForm = new RegistrationForm(data);
+        dispatch(Actions.confirmRegistration(patientId, registrationForm));
     }
 
     return (
-        <Box component={'form'} onSubmit={onSubmitApplication}>
-            {mode === PatientApplicationViewMode.DOCTOR ? (
+        <Box component={'form'} onSubmit={onSubmitRegistrationForm}>
+            {mode === PatientRegistrationFormViewMode.DOCTOR ? (
                 <Stack spacing={2}>
                     <Typography variant="h6">Patient Registration</Typography>
                     <Divider />
@@ -1064,7 +1064,7 @@ const PatientPortal = ({ mode, patientId }) => {
                     variant="outlined"
                     m={2}
                     fullWidth
-                >Submit Application</Button>
+                >Submit RegistrationForm</Button>
             </Box>
         </Box>
     )

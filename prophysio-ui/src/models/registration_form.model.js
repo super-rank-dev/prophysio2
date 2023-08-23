@@ -1,4 +1,4 @@
-class AppointmentModel {
+class RegistrationFormModel {
     constructor(data) {
         for (let pair of data.entries()) {
             const [key, value] = pair;
@@ -7,4 +7,4 @@ class AppointmentModel {
     }
 }
 
-export default AppointmentModel;
+export default RegistrationFormModel;
