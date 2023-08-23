@@ -4,7 +4,7 @@
 
 // Load Service model
 const Service = require('../models/service');
-const Application = require('../models/application');
+const RegistrationForm = require('../models/registration_form');
 
 // @route   POST api/services/
 // @desc    Register service

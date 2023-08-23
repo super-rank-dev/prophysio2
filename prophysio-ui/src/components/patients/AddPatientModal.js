@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         boxShadow: '24px',
         padding: '2rem',
         outline: 'none',
-        width: '400px'
+        width: '600px'
     },
     '@media screen and (max-width: 600px)': {
         appointmentModal: {

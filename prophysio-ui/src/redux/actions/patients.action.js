@@ -22,6 +22,7 @@ export const getAllPatients = () => dispatch => {
 
 // Add Patient Request
 export const addPatient = (patient, handleClose) => dispatch => {
+    console.log(patient);
     axios
         .post(`${SERVER_ADDRESS}/api/patients`, patient)
         .then(res => {

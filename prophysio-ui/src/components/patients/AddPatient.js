@@ -7,6 +7,7 @@ import {
     CardContent,
     CardMedia,
     Divider,
+    Grid,
     Stack,
     TextField,
     Typography
@@ -28,7 +29,12 @@ const AddPatient = ({ handleClose }) => {
         const patient = new Patient({
             firstName: data.get('firstName'),
             lastName: data.get('lastName'),
-            email: data.get('email')
+            email: data.get('email'),
+            dateOfBirth: data.get('dateOfBirth'),
+            gender: data.get('gender'),
+            phoneNumber: data.get('phoneNumber'),
+            address: data.get('address'),
+            emergencyContact: data.get('emergencyContact')
         });
         dispatch(Actions.addPatient(patient, handleClose));
     }
@@ -40,7 +46,6 @@ const AddPatient = ({ handleClose }) => {
             <Typography>Fill in the form below to create a new Patient Registration Request. * Indicates a required field.</Typography>
             <Card
                 component={'form'}
-                sx={{ maxWidth: 345 }}
                 onSubmit={onAddPatient}
                 noValidate
             >
@@ -51,39 +56,112 @@ const AddPatient = ({ handleClose }) => {
                     image="https://source.unsplash.com/random?healthcare"
                 />
                 <CardContent>
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="email"
-                        label="Email Address"
-                        id="email"
-                        error={error.email}
-                        helperText={error.email}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="firstName"
-                        label="First Name"
-                        id="firstName"
-                        error={error.firstName}
-                        helperText={error.firstName}
-                    />
-                    <TextField
-                        variant="standard"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="lastName"
-                        label="Last Name"
-                        id="lastName"
-                        error={error.lastName}
-                        helperText={error.lastName}
-                    />
+                    <Grid container>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="email"
+                                label="Email Address"
+                                id="email"
+                                error={error.email}
+                                helperText={error.email}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="firstName"
+                                label="First Name"
+                                id="firstName"
+                                error={error.firstName}
+                                helperText={error.firstName}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="lastName"
+                                label="Last Name"
+                                id="lastName"
+                                error={error.lastName}
+                                helperText={error.lastName}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="dateOfBirth"
+                                label="Date Of Birth"
+                                id="dateOfBirth"
+                                error={error.dateOfBirth}
+                                helperText={error.dateOfBirth}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="gender"
+                                label="Gender"
+                                id="gender"
+                                error={error.gender}
+                                helperText={error.gender}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="phoneNumber"
+                                label="Phone Number"
+                                id="phoneNumber"
+                                error={error.phoneNumber}
+                                helperText={error.phoneNumber}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="address"
+                                label="Address"
+                                id="address"
+                                error={error.address}
+                                helperText={error.address}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="emergencyContact"
+                                label="Emergency Contact"
+                                id="emergencyContact"
+                                error={error.emergencyContact}
+                                helperText={error.emergencyContact}
+                            />
+                        </Grid>
+                    </Grid>
                 </CardContent>
                 <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <ButtonGroup>

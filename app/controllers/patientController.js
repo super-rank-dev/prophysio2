@@ -8,8 +8,11 @@ const validatePatientInput = require('../validation/patient');
 
 // Load Patient model
 const Patient = require('../models/patient');
-const Application = require('../models/application');
-const WaitingPatient = require('../models/waiting-patients');
+const RegistrationForm = require('../models/registration_form');
+const IntakeForm = require('../models/intake_form');
+const WaitingPatient = require('../models/waiting_patient');
+const { BodyPart } = require('../../config/enum');
+const patient = require('../validation/patient');
 
 // @route   POST api/patients
 // @desc    Register patient
@@ -28,27 +31,37 @@ exports.registerPatient = async (req, res) => {
         errors.email = 'Email already exists';
         return res.status(400).json(errors);
     } else {
-        const newApplication = new Application({
+        const newRegistrationForm = new RegistrationForm({
             title: '',
-            firstName: '',
-            lastName: '',
-            dateOfBirth: '',
-            gender: '',
-            mobilePhone: ''
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            dateOfBirth: req.body.dateOfBirth,
+            gender: req.body.gender,
+            mobilePhone: req.body.phoneNumber,
+            homeAddress: req.body.address
         });
-        const application = await newApplication.save();
+        const registrationForm = await newRegistrationForm.save();
+        const newIntakeForm = new IntakeForm();
+        const intakeForm = await newIntakeForm.save();
         const newPatient = new Patient({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            applicationId: application.id,
+            dateOfBirth: req.body.dateOfBirth,
+            gender: req.body.gender,
+            phoneNumber: req.body.phoneNumber,
+            address: req.body.address,
+            emergencyContact: req.body.emergencyContact,
+            registrationForm: registrationForm.id,
+            intakeForm: intakeForm.id
         });
-        const patient = await newPatient.save();
+        const patient = await (await (await newPatient.save()).populate('registrationForm')).populate('intakeForm');
+        console.log(patient);
         res.json(patient);
 
         const theme = readFileSync('./reminder/patient-registration.ejs', 'utf8');
         const content = ejs.render(theme, {
-            serverAddress: '64.69.39.138:3000',
+            serverAddress: 'physio2.safeguardhosting.ca:3000',
             patientId: patient._id
         });
         // Define the email message
@@ -57,6 +70,7 @@ exports.registerPatient = async (req, res) => {
             subject: 'Prophysio v1.0 Patient Registration',
             content: content.replace(/[\n\r]| {2}/g, '')
         };
+        console.log(message);
         sendMessage(message);
     };
 }
@@ -97,7 +111,7 @@ exports.confirmRegistration = async (req, res) => {
         return res.status(400).json(errors);
     }
 
-    const { patientId, application } = req.body;
+    const { patientId, registrationForm } = req.body;
 
     const patient = await Patient.findById(patientId);
 
@@ -105,11 +119,11 @@ exports.confirmRegistration = async (req, res) => {
         errors.patient = 'You are not registered yet';
         return res.status(404).json(errors);
     } else {
-        const updatedApplication = await Application.findOneAndUpdate(
-            { _id: patient.applicationId },
-            { $set: application }
+        const updatedRegistrationForm = await RegistrationForm.findOneAndUpdate(
+            { _id: patient.registrationFormId },
+            { $set: registrationForm }
         );
-        res.json(updatedApplication);
+        res.json(updatedRegistrationForm);
     };
 }
 
@@ -118,7 +132,30 @@ exports.confirmRegistration = async (req, res) => {
 // @access  Public
 exports.getPatients = async (req, res) => {
     // Find all patients
-    const patients = await Patient.find()
+    const patients = await Patient.aggregate([
+        {
+            $lookup: {
+                from: "registration_forms",
+                localField: "registrationForm",
+                foreignField: "_id",
+                as: "registrationForm"
+            }
+        },
+        {
+            $lookup: {
+                from: "intake_forms",
+                localField: "intakeForm",
+                foreignField: "_id",
+                as: "intakeForm"
+            }
+        },
+        {
+            $addFields: {
+                registrationForm: { $arrayElemAt: ["$registrationForm", 0] },
+                intakeForm: { $arrayElemAt: ["$intakeForm", 0] }
+            }
+        }
+    ]);
     res.json(patients);
 };
 

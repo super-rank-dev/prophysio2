@@ -17,7 +17,7 @@ const waitingPatients = new mongoose.Schema({
         required: true,
         unique: true
     },
-    applicationId: {
+    registrationFormId: {
         type: ObjectId,
         required: true
     },
@@ -29,4 +29,4 @@ const waitingPatients = new mongoose.Schema({
 });
 
 // Create and export the patient model
-module.exports = mongoose.model('waiting-patients', waitingPatients);
+module.exports = mongoose.model('waiting_patients', waitingPatients);

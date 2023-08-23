@@ -7,11 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Button, ButtonGroup, Card, CardActions, CardContent, Chip, Divider, Stack, TableHead, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import { Button, ButtonGroup, Card, CardActions, CardContent, Chip, Divider, IconButton, Stack, TableHead, Typography } from '@mui/material';
 import TablePaginationActions from '../global/TablePaginationActions';
-import { RegistrationFormStatus } from '../../config/enum';
+import { IntakeFormStatus, RegistrationFormStatus } from '../../config/enum';
 import * as Actions from '../../redux/actions';
 import AddPatientModal from './AddPatientModal';
 
@@ -47,6 +49,10 @@ const Patients = () => {
     };
     const handleAddPatientClose = () => setOpenAddPatient(false);
 
+    const sendRegistrationForm = (patient) => {
+
+    }
+
     const sendIntakeForm = (patient) => {
 
     }
@@ -71,8 +77,13 @@ const Patients = () => {
                                     <TableCell>No</TableCell>
                                     <TableCell>Name</TableCell>
                                     <TableCell>Email</TableCell>
-                                    <TableCell>Registration Status</TableCell>
-                                    <TableCell>Intake Status</TableCell>
+                                    <TableCell>Date of Birth</TableCell>
+                                    <TableCell>Gender</TableCell>
+                                    <TableCell>Phone Number</TableCell>
+                                    <TableCell>Address</TableCell>
+                                    <TableCell>Emergency Contact</TableCell>
+                                    <TableCell>Registration</TableCell>
+                                    <TableCell>Questionnaire</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -92,20 +103,51 @@ const Patients = () => {
                                             {row.email}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.status === RegistrationFormStatus.PENDING ? (
-                                                <Chip label="Pending" color="primary" variant="outlined" size='small' />
-                                            ) : (
-                                                <Chip label="Accepted" color="success" variant="outlined" size='small' />
-                                            )}
+                                            {row.dateOfBirth}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.time.toString()}
+                                            {row.gender}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {row.phoneNumber}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {row.address}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {row.emergencyContact}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            <Stack spacing={1}>
+                                                {row.registrationForm.status === RegistrationFormStatus.PENDING && (
+                                                    <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
+                                                {row.registrationForm.status === RegistrationFormStatus.ACCEPTED && (
+                                                    <Chip label="Accepted" color="success" variant="outlined" size='small' />)}
+                                                <Chip label="Send" size='small' color='primary' onClick={sendRegistrationForm} />
+                                            </Stack>
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            <Stack spacing={1}>
+                                                {row.intakeForm.status === IntakeFormStatus.UNKNOWN && (
+                                                    <Chip label="Unknown" color="secondary" variant="outlined" size='small' />)}
+                                                {row.intakeForm.status === IntakeFormStatus.PENDING && (
+                                                    <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
+                                                {row.intakeForm.status === IntakeFormStatus.ACCEPTED && (
+                                                    <Chip label="Accepted" color="success" variant="outlined" size='small' />)}
+                                                <Chip label="Send" size='small' color='primary' onClick={sendIntakeForm} />
+                                            </Stack>
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            <Stack sx={{ display: 'block' }}>
+                                                <IconButton><EditIcon /></IconButton>
+                                                <IconButton onClick={() => removePatient(row._id)}><DeleteIcon /></IconButton>
+                                            </Stack>
                                         </TableCell>
                                     </TableRow>
                                 ))}
                                 {emptyRows > 0 && (
                                     <TableRow style={{ height: 50 * emptyRows }}>
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={11} />
                                     </TableRow>
                                 )}
                             </TableBody>
@@ -113,7 +155,7 @@ const Patients = () => {
                                 <TableRow>
                                     <TablePagination
                                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={6}
+                                        colSpan={11}
                                         count={patients.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}

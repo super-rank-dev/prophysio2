@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-const { ApplicationStatus } = require('../../config/enum');
+const { RegistrationFormStatus } = require('../../config/enum');
 
 const { Schema: { Types: { ObjectId } } } = mongoose;
 
-// Define the application schema
-const applicationSchema = new mongoose.Schema({
+// Define the registrationForm schema
+const registrationFormSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default: ApplicationStatus.PENDING
+        default: RegistrationFormStatus.PENDING
     },
     title: {
         type: String,
@@ -147,5 +147,5 @@ const applicationSchema = new mongoose.Schema({
     }
 });
 
-// Create and export the application model
-module.exports = mongoose.model('applications', applicationSchema);
+// Create and export the registrationForm model
+module.exports = mongoose.model('registration_forms', registrationFormSchema);
