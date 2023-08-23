@@ -1,3 +1,6 @@
+const ejs = require('ejs');
+const { readFileSync } = require('fs');
+
 const sendMessage = require('../services/mailService');
 
 // Load Input Validation
@@ -7,7 +10,6 @@ const validatePatientInput = require('../validation/patient');
 const Patient = require('../models/patient');
 const Application = require('../models/application');
 const WaitingPatient = require('../models/waiting-patients');
-const { PatientStatus } = require('../../config/enum');
 
 // @route   POST api/patients
 // @desc    Register patient
@@ -44,12 +46,16 @@ exports.registerPatient = async (req, res) => {
         const patient = await newPatient.save();
         res.json(patient);
 
+        const theme = readFileSync('./reminder/patient-registration.ejs', 'utf8');
+        const content = ejs.render(theme, {
+            serverAddress: '64.69.39.138:3000',
+            patientId: patient._id
+        });
         // Define the email message
         const message = {
-            from: user,
-            to: req.body.email,
-            subject: "Prophysio v1.0 Patient Registration",
-            html: `<a href='http://localhost:3000/patient-portal/${patient._id}'>Click here to access the patient portal</a>`
+            dest: patient.email,
+            subject: 'Prophysio v1.0 Patient Registration',
+            content: content.replace(/[\n\r]| {2}/g, '')
         };
         sendMessage(message);
     };

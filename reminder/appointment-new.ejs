@@ -6,7 +6,8 @@
     <p>Service: <%= service.name %></p>
     <p>Practitioner: <%= practitioner.firstName %> <%= practitioner.lastName %></p>
     <p>Room: <%= room.name %></p>
-    <p>Patient: <%= patient.firstName %> <%= patient.lastName %></p>
+    <p>Charged Amount: $<% appointment.chargedAmount %></p>
+    <p>Time: From <%= appointment.startTime %> To <%= appointment.endTime %></p>
 </body>
 
 </html>
