@@ -63,19 +63,6 @@ const AddPatient = ({ handleClose }) => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="email"
-                                label="Email Address"
-                                id="email"
-                                error={error.email}
-                                helperText={error.email}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6} px={2}>
-                            <TextField
-                                variant="standard"
-                                margin="normal"
-                                required
-                                fullWidth
                                 name="firstName"
                                 label="First Name"
                                 id="firstName"
@@ -94,6 +81,19 @@ const AddPatient = ({ handleClose }) => {
                                 id="lastName"
                                 error={error.lastName}
                                 helperText={error.lastName}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} px={2}>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="email"
+                                label="Email Address"
+                                id="email"
+                                error={error.email}
+                                helperText={error.email}
                             />
                         </Grid>
                         <Grid item xs={12} md={6} px={2}>

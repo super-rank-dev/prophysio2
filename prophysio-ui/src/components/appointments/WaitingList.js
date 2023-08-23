@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
     Autocomplete,
     Avatar,
@@ -26,12 +25,11 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import * as Actions from '../../redux/actions';
 
-const WaitingList = () => {
+const WaitingList = ({ handleClose }) => {
 
     const [waitingList, setWaitingList] = useState([]);
     const [current, setCurrent] = useState();
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { patients, waitingPatients } = useSelector(({ patients }) => (patients));
 
@@ -50,7 +48,7 @@ const WaitingList = () => {
         );
     }
     const saveWaitingPatients = () => {
-        dispatch(Actions.saveWaitingPatients(waitingList, navigate));
+        dispatch(Actions.saveWaitingPatients(waitingList, handleClose));
     }
 
     useEffect(() => {
@@ -143,7 +141,7 @@ const WaitingList = () => {
                             variant='outlined'
                             color='secondary'
                             startIcon={<CancelIcon />}
-                            onClick={() => navigate('/home/appointments')}
+                            onClick={handleClose}
                         >Cancel</Button>
                     </ButtonGroup>
                 </CardActions>

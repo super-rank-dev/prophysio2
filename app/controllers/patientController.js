@@ -61,7 +61,7 @@ exports.registerPatient = async (req, res) => {
 
         const theme = readFileSync('./reminder/patient-registration.ejs', 'utf8');
         const content = ejs.render(theme, {
-            serverAddress: 'physio2.safeguardhosting.ca:3000',
+            serverAddress: '64.69.39.138',
             patientId: patient._id
         });
         // Define the email message
@@ -120,7 +120,7 @@ exports.confirmRegistration = async (req, res) => {
         return res.status(404).json(errors);
     } else {
         const updatedRegistrationForm = await RegistrationForm.findOneAndUpdate(
-            { _id: patient.registrationFormId },
+            { _id: patient.registrationForm },
             { $set: registrationForm }
         );
         res.json(updatedRegistrationForm);

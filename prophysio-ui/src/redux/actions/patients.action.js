@@ -77,11 +77,11 @@ export const getWaitingPatients = () => dispatch => {
 };
 
 // Confirm Registration
-export const saveWaitingPatients = (waitingPatients, navigate) => dispatch => {
+export const saveWaitingPatients = (waitingPatients, handleClose) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/waiting-patients`, { waitingPatients })
         .then(() => {
-            navigate('/home/appointments');
+            handleClose();
         })
         .catch(err =>
             dispatch({

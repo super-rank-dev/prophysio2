@@ -16,15 +16,15 @@ import EditAppointment from './EditAppointment';
 import { CalendarViewMode } from '../../config/enum';
 import AddPatientModal from '../patients/AddPatientModal';
 import { adjustAppointments } from '../../utils/compatibility';
-import { useNavigate } from 'react-router-dom';
+import WaitingListModal from './WaitingListModal';
 
 const Appointments = () => {
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [openAddAppointment, setOpenAddAppointment] = useState(false);
     const [openEditAppointment, setOpenEditAppointment] = useState(false);
     const [openAddPatient, setOpenAddPatient] = useState(false);
+    const [openWaitingList, setOpenWaitingList] = useState(false);
     const [events, setEvents] = useState([]);
     const [viewMode, setViewMode] = useState(CalendarViewMode.WEEK);
 
@@ -75,6 +75,11 @@ const Appointments = () => {
     };
     const handleAddPatientClose = () => setOpenAddPatient(false);
 
+    const handleWaitingListOpen = () => {
+        setOpenWaitingList(true);
+    };
+    const handleWaitingListClose = () => setOpenWaitingList(false);
+
     return (
         <Stack spacing={2}>
             <Grid container>
@@ -88,7 +93,7 @@ const Appointments = () => {
                         <Button
                             startIcon={<HourglassEmptyIcon />}
                             color='secondary'
-                            onClick={() => navigate('/home/waiting-list')}
+                            onClick={handleWaitingListOpen}
                         >Waiting List</Button>
                     </ButtonGroup>
                 </Grid>
@@ -113,6 +118,7 @@ const Appointments = () => {
             <AddAppointment open={openAddAppointment} handleClose={handleAddAppointmentClose} />
             <EditAppointment open={openEditAppointment} handleClose={handleEditAppointmentClose} />
             <AddPatientModal open={openAddPatient} handleClose={handleAddPatientClose} />
+            <WaitingListModal open={openWaitingList} handleClose={handleWaitingListClose} />
             <Calendar
                 events={events}
                 handleAddAppointmentOpen={handleAddAppointmentOpen}

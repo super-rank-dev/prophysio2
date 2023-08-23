@@ -17,9 +17,30 @@ const waitingPatients = new mongoose.Schema({
         required: true,
         unique: true
     },
-    registrationFormId: {
+    dateOfBirth: {
+        type: Date
+    },
+    gender: {
+        type: String
+    },
+    phoneNumber: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    emergencyContact: {
+        type: String
+    },
+    registrationForm: {
         type: ObjectId,
-        required: true
+        required: true,
+        ref: 'registration_forms'
+    },
+    intakeForm: {
+        type: ObjectId,
+        required: true,
+        ref: 'intake_forms'
     },
     active: {
         type: Boolean,
