@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import SessionExpired from '../status/SessionExpired';
 
 const ProtectedRoute = () => {
@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
         <>
             {isAuthenticated ?
                 (<Outlet />) :
-                (<SessionExpired />)}
+                (<Navigate to="/login" />)}
         </>
     );
 }
