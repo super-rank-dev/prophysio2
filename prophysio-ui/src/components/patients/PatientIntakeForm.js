@@ -41,7 +41,7 @@ const PatientIntakeForm = () => {
     }
 
     return (
-        <Box component={'form'} onSubmit={onSubmitIntakeForm} p={8}>
+        <Box component={'form'} onSubmit={onSubmitIntakeForm}>
             <Stack spacing={2}>
                 <Box
                     sx={{

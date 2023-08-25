@@ -1,10 +1,9 @@
 const ejs = require('ejs');
-const { readFileSync } = require('fs');
 
 // Load Input Validation
 const validateAppointmentInput = require('../validation/appointment');
 
-const sendMessage = require('../services/mailService');
+const mailService = require('../services/mailService');
 
 // Load Appointment model
 const { AppointmentStatus } = require('../../config/enum');
@@ -40,22 +39,22 @@ exports.registerAppointment = async (req, res) => {
     const room = await Room.findById(appointment.roomId);
     const patient = await Patient.findById(appointment.patientId);
 
-    const theme = readFileSync('./reminder/appointment-new.ejs', 'utf8');
-    const content = ejs.render(theme, {
-        appointment,
-        service,
-        branch,
-        practitioner,
-        room,
-        patient
-    });
+    // const theme = readFileSync('./reminder/appointment-new.ejs', 'utf8');
+    // const content = ejs.render(theme, {
+    //     appointment,
+    //     service,
+    //     branch,
+    //     practitioner,
+    //     room,
+    //     patient
+    // });
     // Define the email message
-    const message = {
-        dest: patient.email,
-        subject: 'Prophysio v1.0 Appointment',
-        content: content.replace(/[\n\r]| {2}/g, '')
-    };
-    sendMessage(message);
+    // const message = {
+    //     dest: patient.email,
+    //     subject: 'Prophysio v1.0 Appointment',
+    //     content: content.replace(/[\n\r]| {2}/g, '')
+    // };
+    mailService.newAppointment({ service, branch, practitioner, room, patient, appointment });
 }
 
 // @route   GET api/appointments
@@ -96,24 +95,24 @@ exports.updateAppointment = async (req, res) => {
         const room = await Room.findById(req.body.roomId);
         const patient = await Patient.findById(req.body.patientId);
 
-        const theme = readFileSync('./reminder/appointment-reschedule.ejs', 'utf8');
-        const content = ejs.render(theme, {
-            service,
-            branch,
-            practitioner,
-            room,
-            patient,
-            originalAppointment: appointment,
-            rescheduledAppointment: req.body
-        });
-        console.log(req.body);
+        // const theme = readFileSync('./reminder/appointment-reschedule.ejs', 'utf8');
+        // const content = ejs.render(theme, {
+        //     service,
+        //     branch,
+        //     practitioner,
+        //     room,
+        //     patient,
+        //     originalAppointment: appointment,
+        //     rescheduledAppointment: req.body
+        // });
+        // console.log(req.body);
         // Define the email message
-        const message = {
-            dest: patient.email,
-            subject: 'Prophysio v1.0 Appointment',
-            content: content.replace(/[\n\r]| {2}/g, '')
-        };
-        sendMessage(message);
+        // const message = {
+        //     dest: patient.email,
+        //     subject: 'Prophysio v1.0 Appointment',
+        //     content: content.replace(/[\n\r]| {2}/g, '')
+        // };
+        mailService.updateAppointment({ service, branch, practitioner, room, patient, appointment, reqBody: req.body });
     }
 
     const updatedAppointment = await Appointment.findOneAndUpdate(
@@ -127,6 +126,13 @@ exports.updateAppointment = async (req, res) => {
 // @desc    Delete appointment
 // @access  Public
 exports.deleteAppointment = async (req, res) => {
-    await Appointment.findOneAndRemove({ _id: req.params.id });
+    const appointment = await Appointment.findOneAndRemove({ _id: req.params.id });
     res.json({ success: true });
+    
+    const branch = await Branch.findById(appointment.branchId);
+    const service = await Service.findById(appointment.serviceId);
+    const practitioner = await User.findById(appointment.practitionerId);
+    const room = await Room.findById(appointment.roomId);
+    const patient = await Patient.findById(appointment.patientId);
+    mailService.deleteAppointment({ service, branch, practitioner, room, patient, appointment });
 }

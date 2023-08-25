@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { Outlet, Navigate } from "react-router-dom";
-import SessionExpired from '../status/SessionExpired';
+import { Outlet } from "react-router-dom";
+import Status401 from "../status/Status401";
 
 const ProtectedRoute = () => {
 
@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
         <>
             {isAuthenticated ?
                 (<Outlet />) :
-                (<Navigate to="/login" />)}
+                (<Status401 />)}
         </>
     );
 }

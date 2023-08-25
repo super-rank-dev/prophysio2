@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Avatar, Box, Button, Chip, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
@@ -8,7 +9,9 @@ import * as Actions from '../../redux/actions';
 
 const countryCodes = Object.keys(countries);
 
-const PatientRegistrationForm = ({ patientId }) => {
+const PatientRegistrationForm = () => {
+
+    const { patientId } = useParams();
 
     const dispatch = useDispatch();
 

@@ -27,6 +27,7 @@ import './App.css';
 import PatientPortal from './components/patients/PatientPortal';
 import { PatientPortalType } from './config/enum';
 import PatientIntakeForm from './components/patients/PatientIntakeForm';
+import PatientRegistrationForm from './components/patients/PatientRegistrationForm';
 
 const App = () => {
 
@@ -63,6 +64,8 @@ const App = () => {
                             <Route path='patients' element={<Patients />} />
                             <Route path='add-patient' element={<AddPatient />} />
                             <Route path='add-patient-requests' element={<AddPatientRequests />} />
+                            <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
+                            <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
                             <Route path='guarantors' element={<Guarantors />} />
                             <Route path='appointments' element={<Appointments />} />
                             <Route path='waiting-list' element={<WaitingList />} />
@@ -75,7 +78,7 @@ const App = () => {
                     </Route>
                     <Route path='login' element={<Login />} />
                     <Route path='register' element={<Register />} />
-                    <Route path='patient-registration/:patientId' element={<PatientPortal type={PatientPortalType.REGISTRATION} />} />
+                    <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
                     <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
                 </Routes>
             </Router>

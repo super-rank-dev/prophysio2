@@ -1,12 +1,12 @@
 import React from 'react';
 import { Grid, Stack } from '@mui/material';
-import AppointmentsCard from './sections/AppointmentsCard';
-import UpcomingBirthdaysCard from './sections/UpcomingBirthdaysCard';
-import MissingNotesCard from './sections/MissingNotesCard';
-import ARStatusCard from './sections/ARStatusCard';
-import AbsenteeSummaryCard from './sections/AbsenteeSummaryCard';
-import PractitionerTargetsCard from './sections/PractitionerTargetsCard';
-import AllocationsCard from './sections/AllocationsCard';
+import AppointmentsCard from './cards/AppointmentsCard';
+import UpcomingBirthdaysCard from './cards/UpcomingBirthdaysCard';
+import MissingNotesCard from './cards/MissingNotesCard';
+import ARStatusCard from './cards/ARStatusCard';
+import AbsenteeSummaryCard from './cards/AbsenteeSummaryCard';
+import PractitionerTargetsCard from './cards/PractitionerTargetsCard';
+import AllocationsCard from './cards/AllocationsCard';
 
 const Dashboard = () => {
     return (

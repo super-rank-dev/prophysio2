@@ -13,13 +13,16 @@ const EditPatient = ({ handleClose, patient }) => {
         <Stack spacing={2}>
             <Grid container>
                 <Grid item xs={12} md={4} p={2}>
-                    <PersonalInfoCard onClickCard={() => navigate(`/patient-profile/${patient._id}`)} />
+                    <PersonalInfoCard onClickCard={() =>
+                        navigate(`/home/patient-profile/${patient._id}`)} />
                 </Grid>
                 <Grid item xs={12} md={4} p={2}>
-                    <RegistrationFormCard onClickCard={() => navigate(`/patient-registration/${patient._id}`)} />
+                    <RegistrationFormCard onClickCard={() =>
+                        navigate(`/home/patient-registration/${patient._id}`)} />
                 </Grid>
                 <Grid item xs={12} md={4} p={2}>
-                    <IntakeFormCard onClickCard={() => navigate(`/patient-intake/${patient._id}`)} />
+                    <IntakeFormCard onClickCard={() =>
+                        navigate(`/home/patient-intake/${patient._id}`)} />
                 </Grid>
             </Grid>
         </Stack>

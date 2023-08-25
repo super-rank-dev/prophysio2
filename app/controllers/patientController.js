@@ -55,22 +55,32 @@ exports.registerPatient = async (req, res) => {
             registrationForm: registrationForm.id,
             intakeForm: intakeForm.id
         });
-        const patient = await (await (await newPatient.save()).populate('registrationForm')).populate('intakeForm');
-        console.log(patient);
+        const patient = await (await (await newPatient.save())
+            .populate('registrationForm'))
+            .populate('intakeForm');
         res.json(patient);
 
-        const theme = readFileSync('./reminder/patient-registration.ejs', 'utf8');
-        const content = ejs.render(theme, {
-            serverAddress: '64.69.39.138',
-            patientId: patient._id
-        });
+        // const theme = readFileSync('./reminder/patient-registration.ejs', 'utf8');
+        // const content = ejs.render(theme, {
+        //     serverAddress: '64.69.39.138',
+        //     patientId: patient._id
+        // });
         // Define the email message
+        // const message = {
+        //     dest: patient.email,
+        //     subject: 'Prophysio v1.0 Patient Registration',
+        //     content: content.replace(/[\n\r]| {2}/g, '')
+        // };
+        const theme = readFileSync('./reminder/patient-registration.html', 'utf8');
         const message = {
             dest: patient.email,
             subject: 'Prophysio v1.0 Patient Registration',
-            content: content.replace(/[\n\r]| {2}/g, '')
+            content: theme,
+            data: {
+                serverAddress: 'localhost:3000',
+                patientId: patient._id
+            }
         };
-        console.log(message);
         sendMessage(message);
     };
 }
@@ -141,7 +151,6 @@ exports.confirmQuestionnaire = async (req, res) => {
     }
 
     const { patientId, intakeForm } = req.body;
-    console.log({ patientId, intakeForm });
 
     const patient = await Patient.findById(patientId);
 
