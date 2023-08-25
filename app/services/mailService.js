@@ -5,18 +5,6 @@ const { readFileSync } = require('fs');
 
 const serverConfig = require('../../config/mail-server');
 
-// const sendMessage = ({ dest, subject, content }) => {
-//     const command = `echo "${content}" | mail -s "${subject}" -a "Content-type: text/html" ${dest}`;
-
-//     exec(command, (error, stdout, stderr) => {
-//         if (error) {
-//             console.error(`Error: ${error.message}`);
-//             return;
-//         }
-//         console.log('Email sent successfully!');
-//     });
-// };
-
 const sendMessage = async ({ dest, subject, content, data }) => {
     const source = content.toString();
     const template = handlebars.compile(source);
@@ -106,7 +94,6 @@ exports.sendRegistrationForm = ({ patient }) => {
             patientId: patient._id
         }
     };
-    console.log(message);
     sendMessage(message);
 }
 

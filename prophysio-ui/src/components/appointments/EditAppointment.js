@@ -16,6 +16,7 @@ import { makeStyles } from '@mui/styles';
 import * as Actions from '../../redux/actions';
 import { AppointmentStatus } from '../../config/enum';
 import { Delete } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
     appointmentModal: {
@@ -46,6 +47,8 @@ const EditAppointment = ({ open, handleClose }) => {
 
     const classes = useStyles();
 
+    const { enqueueSnackbar } = useSnackbar();
+    
     const [isVertical, setIsVertical] = useState(false);
 
     const dispatch = useDispatch();
@@ -71,17 +74,21 @@ const EditAppointment = ({ open, handleClose }) => {
 
     const error = useSelector(({ error }) => error);
 
+    const successHandler = (msg) => {
+        enqueueSnackbar(msg, { variant: 'success' });
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(Actions.editAppointment({
             ...appointment,
             startTime: new Date(appointment.startTime).toISOString(),
             endTime: new Date(appointment.endTime).toISOString()
-        }, handleClose));
+        }, handleClose, successHandler));
     };
 
     const handleRemove = () => {
-        dispatch(Actions.removeAppointment(appointment.id, handleClose));
+        dispatch(Actions.removeAppointment(appointment.id, handleClose, successHandler));
     };
 
     return (

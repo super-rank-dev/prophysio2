@@ -16,7 +16,7 @@ import EditAppointment from './EditAppointment';
 import { CalendarViewMode } from '../../config/enum';
 import AddPatientModal from '../patients/AddPatientModal';
 import { adjustAppointments } from '../../utils/compatibility';
-import WaitingListModal from './WaitingListModal';
+import WaitingListModal from '../patients/WaitingListModal';
 
 const Appointments = () => {
 

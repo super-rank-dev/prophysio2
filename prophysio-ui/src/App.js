@@ -15,7 +15,6 @@ import AddPatient from './components/patients/AddPatient';
 import AddPatientRequests from './components/patients/AddPatientRequests';
 import Guarantors from './components/guarantors/Guarantors';
 import Appointments from './components/appointments/Appointments';
-import WaitingList from './components/appointments/WaitingList';
 import Billing from './components/billing/Billing';
 import Invoices from './components/invoices/Invoices';
 import Statement from './components/statement/Statement';
@@ -68,7 +67,6 @@ const App = () => {
                             <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
                             <Route path='guarantors' element={<Guarantors />} />
                             <Route path='appointments' element={<Appointments />} />
-                            <Route path='waiting-list' element={<WaitingList />} />
                             <Route path='billing' element={<Billing />} />
                             <Route path='invoices' element={<Invoices />} />
                             <Route path='statement' element={<Statement />} />

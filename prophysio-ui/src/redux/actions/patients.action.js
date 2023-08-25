@@ -1,6 +1,14 @@
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../config/key';
-import { GET_ERRORS, GET_PATIENTS, ADD_PATIENT, CONFIRM_REGISTRATION, GET_WAITING_PATIENTS, CONFIRM_QUESTIONNAIRE } from '../types';
+import {
+    GET_ERRORS,
+    GET_PATIENTS,
+    ADD_PATIENT,
+    CONFIRM_REGISTRATION_FORM,
+    GET_WAITING_PATIENTS,
+    CONFIRM_INTAKE_FORM,
+    REMOVE_PATIENT
+} from '../types';
 
 // Get All Patients
 export const getAllPatients = () => dispatch => {
@@ -22,7 +30,6 @@ export const getAllPatients = () => dispatch => {
 
 // Add Patient Request
 export const addPatient = (patient, handleClose) => dispatch => {
-    console.log(patient);
     axios
         .post(`${SERVER_ADDRESS}/api/patients`, patient)
         .then(res => {
@@ -40,11 +47,33 @@ export const addPatient = (patient, handleClose) => dispatch => {
         );
 };
 
+// Remove Patient
+export const removePatient = (patient) => dispatch => {
+    axios
+        .delete(`${SERVER_ADDRESS}/api/patients/${patient._id}`)
+        .then(res => {
+            dispatch({
+                type: REMOVE_PATIENT,
+                payload: patient
+            })
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 // Confirm Registration Form
 export const confirmRegistrationForm = (patientId, registrationForm) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/confirm-registration-form`, { patientId, registrationForm })
         .then(res => {
+            dispatch({
+                type: CONFIRM_REGISTRATION_FORM,
+                payload: patientId
+            });
             alert('Registration Form Submitted!');
         })
         .catch(err =>
@@ -60,6 +89,10 @@ export const confirmIntakeForm = (patientId, intakeForm) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/confirm-intake-form`, { patientId, intakeForm })
         .then(res => {
+            dispatch({
+                type: CONFIRM_INTAKE_FORM,
+                payload: patientId
+            });
             alert('Intake Form Submitted!');
         })
         .catch(err =>

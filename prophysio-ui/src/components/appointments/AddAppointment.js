@@ -16,6 +16,7 @@ import { makeStyles } from '@mui/styles';
 import * as Actions from '../../redux/actions';
 import AppointmentModel from '../../models/appointment.model';
 import { AppointmentStatus } from '../../config/enum';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles({
     appointmentModal: {
@@ -44,6 +45,8 @@ const useStyles = makeStyles({
 
 const AddAppointment = ({ open, handleClose }) => {
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const classes = useStyles();
 
     const [isVertical, setIsVertical] = useState(false);
@@ -71,6 +74,10 @@ const AddAppointment = ({ open, handleClose }) => {
 
     const error = useSelector(({ error }) => error);
 
+    const successHandler = (msg) => {
+        enqueueSnackbar(msg, { variant: 'success' });
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -86,7 +93,7 @@ const AddAppointment = ({ open, handleClose }) => {
             patientId: data.get('patient'),
             status: AppointmentStatus.BOOKED
         });
-        dispatch(Actions.addAppointment(appointment, handleClose));
+        dispatch(Actions.addAppointment(appointment, handleClose, successHandler));
     };
 
     return (

@@ -58,20 +58,17 @@ exports.registerPatient = async (req, res) => {
             .populate('registrationForm'))
             .populate('intakeForm');
         res.json(patient);
-
-        // const theme = readFileSync('./reminder/patient-registration.ejs', 'utf8');
-        // const content = ejs.render(theme, {
-        //     serverAddress: '64.69.39.138',
-        //     patientId: patient._id
-        // });
-        // Define the email message
-        // const message = {
-        //     dest: patient.email,
-        //     subject: 'Prophysio v1.0 Patient Registration',
-        //     content: content.replace(/[\n\r]| {2}/g, '')
-        // };
         mailService.sendRegistrationForm({ patient });
     };
+}
+
+// @route   DELETE api/patients/:patientId
+// @desc    Delete patient
+// @access  Public
+exports.deletePatient = async (req, res) => {
+    const { patientId } = req.params;
+    await Patient.findOneAndRemove({ _id: patientId });
+    res.json({ success: true });
 }
 
 // @route   GET api/patients/waiting-patients
@@ -79,7 +76,29 @@ exports.registerPatient = async (req, res) => {
 // @access  Public
 exports.getWaitingPatients = async (req, res) => {
     // Find all waiting patients
-    const waitingPatients = await WaitingPatient.find();
+    if (WaitingPatient.countDocuments() <= 0) {
+        return res.json([]);
+    }
+    const waitingPatients = await WaitingPatient.aggregate([
+        {
+            $lookup: {
+                from: "patients",
+                localField: "patient",
+                foreignField: "_id",
+                as: "patient"
+            }
+        },
+        {
+            $addFields: {
+                patient: { $arrayElemAt: ["$patient", 0] }
+            }
+        },
+        {
+            $replaceRoot: {
+                newRoot: "$patient"
+            }
+        }
+    ]);
     res.json(waitingPatients);
 };
 
@@ -91,7 +110,7 @@ exports.saveWaitingPatients = async (req, res) => {
     const { waitingPatients } = req.body;
     for (let i = 0; i < waitingPatients.length; i++) {
         const patient = waitingPatients[i];
-        const newWaitingPatient = new WaitingPatient(patient);
+        const newWaitingPatient = new WaitingPatient({ patient: patient._id });
         await newWaitingPatient.save();
     };
     res.json({ success: true });

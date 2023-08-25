@@ -66,8 +66,8 @@ const Patients = () => {
         dispatch(Actions.confirmIntakeForm(patientId, { status: IntakeFormStatus.PENDING }));
     }
 
-    const removePatient = (patientId) => {
-
+    const removePatient = (patient) => {
+        dispatch(Actions.removePatient(patient));
     }
 
     return (
@@ -132,7 +132,7 @@ const Patients = () => {
                                                     <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
                                                 {row.registrationForm.status === RegistrationFormStatus.ACCEPTED && (
                                                     <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
-                                                <Chip label="Send" size='small' color='primary' onClick={() => sendRegistrationForm(row._id)} />
+                                                <Chip label="Resend" size='small' color='primary' onClick={() => sendRegistrationForm(row._id)} />
                                             </Stack>
                                         </TableCell>
                                         <TableCell component="th" scope="row">
@@ -143,13 +143,18 @@ const Patients = () => {
                                                     <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
                                                 {row.intakeForm.status === IntakeFormStatus.ACCEPTED && (
                                                     <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
-                                                <Chip label="Send" size='small' color='primary' onClick={() => sendIntakeForm(row._id)} />
+                                                <Chip
+                                                    label={row.intakeForm.status === IntakeFormStatus.UNKNOWN ? 'Send' : 'Resend'}
+                                                    size='small'
+                                                    color='primary'
+                                                    onClick={() => sendIntakeForm(row._id)}
+                                                />
                                             </Stack>
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                             <Stack sx={{ display: 'block' }}>
                                                 <IconButton onClick={() => handleEditPatientOpen(row)}><EditIcon /></IconButton>
-                                                <IconButton onClick={() => removePatient(row._id)}><DeleteIcon /></IconButton>
+                                                <IconButton onClick={() => removePatient(row)}><DeleteIcon /></IconButton>
                                             </Stack>
                                         </TableCell>
                                     </TableRow>

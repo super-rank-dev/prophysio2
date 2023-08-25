@@ -4,48 +4,9 @@ const { Schema: { Types: { ObjectId } } } = mongoose;
 
 // Define the patient schema
 const waitingPatients = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    dateOfBirth: {
-        type: Date
-    },
-    gender: {
-        type: String
-    },
-    phoneNumber: {
-        type: String
-    },
-    address: {
-        type: String
-    },
-    emergencyContact: {
-        type: String
-    },
-    registrationForm: {
+    patient: {
         type: ObjectId,
-        required: true,
-        ref: 'registration_forms'
-    },
-    intakeForm: {
-        type: ObjectId,
-        required: true,
-        ref: 'intake_forms'
-    },
-    active: {
-        type: Boolean,
-        required: true,
-        default: false
+        required: true
     }
 });
 

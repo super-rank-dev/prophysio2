@@ -36,7 +36,7 @@ export const getAppointment = (appointment) => dispatch => {
 };
 
 // Add Appointment
-export const addAppointment = (appointment, handleClose) => dispatch => {
+export const addAppointment = (appointment, handleClose, successHandler) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/appointments`, appointment)
         .then((res) => {
@@ -45,6 +45,7 @@ export const addAppointment = (appointment, handleClose) => dispatch => {
                 payload: res.data
             });
             handleClose();
+            successHandler('New Appointment Created!');
         })
         .catch(err =>
             dispatch({
@@ -55,7 +56,7 @@ export const addAppointment = (appointment, handleClose) => dispatch => {
 };
 
 // Edit Appointment
-export const editAppointment = (appointment, handleClose) => dispatch => {
+export const editAppointment = (appointment, handleClose, successHandler) => dispatch => {
     axios
         .put(`${SERVER_ADDRESS}/api/appointments`, appointment)
         .then(() => {
@@ -64,6 +65,7 @@ export const editAppointment = (appointment, handleClose) => dispatch => {
                 payload: appointment
             });
             handleClose();
+            successHandler('Appointment Updated!');
         })
         .catch(err =>
             dispatch({
@@ -74,7 +76,7 @@ export const editAppointment = (appointment, handleClose) => dispatch => {
 }
 
 // Remove Appointment
-export const removeAppointment = (appointmentId, handleClose) => dispatch => {
+export const removeAppointment = (appointmentId, handleClose, successHandler) => dispatch => {
     axios
         .delete(`${SERVER_ADDRESS}/api/appointments/${appointmentId}`)
         .then(() => {
@@ -83,6 +85,7 @@ export const removeAppointment = (appointmentId, handleClose) => dispatch => {
                 payload: appointmentId
             });
             handleClose();
+            successHandler('Appointment Removed!');
         })
         .catch(err =>
             dispatch({
