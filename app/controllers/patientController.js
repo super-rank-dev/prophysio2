@@ -127,6 +127,36 @@ exports.confirmRegistration = async (req, res) => {
     };
 }
 
+// @route   POST api/patients
+// @desc    Register patient
+// @access  Public
+exports.confirmQuestionnaire = async (req, res) => {
+    // const { errors, isValid } = validatePatientInput(req.body);
+    const errors = {};
+    const isValid = true;
+
+    // Check Validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
+    const { patientId, intakeForm } = req.body;
+    console.log({ patientId, intakeForm });
+
+    const patient = await Patient.findById(patientId);
+
+    if (!patient) {
+        errors.patient = 'You are not registered yet';
+        return res.status(404).json(errors);
+    } else {
+        const updatedIntakeForm = await IntakeForm.findOneAndUpdate(
+            { _id: patient.intakeForm },
+            { $set: intakeForm }
+        );
+        res.json(updatedIntakeForm);
+    };
+}
+
 // @route   GET api/patients
 // @desc    Get Patients
 // @access  Public
