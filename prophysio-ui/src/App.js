@@ -13,7 +13,6 @@ import Dashboard from './components/dashboard/Dashboard';
 import Patients from './components/patients/Patients';
 import AddPatient from './components/patients/AddPatient';
 import AddPatientRequests from './components/patients/AddPatientRequests';
-import PatientPortal from './components/patients/PatientPortal';
 import Guarantors from './components/guarantors/Guarantors';
 import Appointments from './components/appointments/Appointments';
 import WaitingList from './components/appointments/WaitingList';
@@ -25,6 +24,9 @@ import Users from './components/users/Users';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 
 import './App.css';
+import PatientPortal from './components/patients/PatientPortal';
+import { PatientPortalType } from './config/enum';
+import PatientIntakeForm from './components/patients/PatientIntakeForm';
 
 const App = () => {
 
@@ -73,7 +75,8 @@ const App = () => {
                     </Route>
                     <Route path='login' element={<Login />} />
                     <Route path='register' element={<Register />} />
-                    <Route path='patient-portal/:patientId' element={<PatientPortal />} />
+                    <Route path='patient-registration/:patientId' element={<PatientPortal type={PatientPortalType.REGISTRATION} />} />
+                    <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
                 </Routes>
             </Router>
         </Provider >

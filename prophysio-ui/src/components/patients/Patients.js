@@ -10,16 +10,17 @@ import TableRow from '@mui/material/TableRow';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { Button, ButtonGroup, Card, CardActions, CardContent, Chip, Divider, IconButton, Stack, TableHead, Typography } from '@mui/material';
 import TablePaginationActions from '../global/TablePaginationActions';
 import { IntakeFormStatus, RegistrationFormStatus } from '../../config/enum';
 import * as Actions from '../../redux/actions';
 import AddPatientModal from './AddPatientModal';
+import EditPatientModal from './EditPatientModal';
 
 const Patients = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [currentPatient, setCurrentPatient] = useState();
 
     const dispatch = useDispatch();
 
@@ -42,6 +43,7 @@ const Patients = () => {
         setPage(0);
     };
     const [openAddPatient, setOpenAddPatient] = useState(false);
+    const [openEditPatient, setOpenEditPatient] = useState(false);
 
     const handleAddPatientOpen = () => {
         dispatch(Actions.clearErrors());
@@ -49,12 +51,18 @@ const Patients = () => {
     };
     const handleAddPatientClose = () => setOpenAddPatient(false);
 
-    const sendRegistrationForm = (patient) => {
+    const handleEditPatientOpen = (patient) => {
+        setCurrentPatient(patient);
+        setOpenEditPatient(true);
+    };
+    const handleEditPatientClose = () => setOpenEditPatient(false);
 
+    const sendRegistrationForm = (patient) => {
+        alert('Registration Form Sent!');
     }
 
     const sendIntakeForm = (patient) => {
-
+        alert('Intake Form Sent!');
     }
 
     const removePatient = (patient) => {
@@ -139,7 +147,7 @@ const Patients = () => {
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                             <Stack sx={{ display: 'block' }}>
-                                                <IconButton><EditIcon /></IconButton>
+                                                <IconButton onClick={() => handleEditPatientOpen(row)}><EditIcon /></IconButton>
                                                 <IconButton onClick={() => removePatient(row._id)}><DeleteIcon /></IconButton>
                                             </Stack>
                                         </TableCell>
@@ -187,6 +195,11 @@ const Patients = () => {
             <AddPatientModal
                 open={openAddPatient}
                 handleClose={handleAddPatientClose}
+            />
+            <EditPatientModal
+                open={openEditPatient}
+                handleClose={handleEditPatientClose}
+                patient={currentPatient}
             />
         </Stack>
     );

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../config/key';
-import { GET_ERRORS, GET_PATIENTS, ADD_PATIENT, CONFIRM_REGISTRATION, GET_WAITING_PATIENTS } from '../types';
+import { GET_ERRORS, GET_PATIENTS, ADD_PATIENT, CONFIRM_REGISTRATION, GET_WAITING_PATIENTS, CONFIRM_QUESTIONNAIRE } from '../types';
 
 // Get All Patients
 export const getAllPatients = () => dispatch => {
@@ -43,12 +43,32 @@ export const addPatient = (patient, handleClose) => dispatch => {
 // Confirm Registration
 export const confirmRegistration = (patientId, registrationForm) => dispatch => {
     axios
-        .post(`${SERVER_ADDRESS}/api/patients/confirm`, { patientId, registrationForm })
+        .post(`${SERVER_ADDRESS}/api/patients/confirm-registration`, { patientId, registrationForm })
         .then(res => {
             dispatch({
                 type: CONFIRM_REGISTRATION,
                 payload: res.data
+            });
+            alert('Registration Confirmed!');
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
             })
+        );
+};
+
+// Confirm Questionnaire
+export const confirmQuestionnaire = (patientId, intakeForm) => dispatch => {
+    axios
+        .post(`${SERVER_ADDRESS}/api/patients/confirm-questionnaire`, { patientId, intakeForm })
+        .then(res => {
+            dispatch({
+                type: CONFIRM_QUESTIONNAIRE,
+                payload: res.data
+            });
+            alert('Questionnaire Confirmed!');
         })
         .catch(err =>
             dispatch({

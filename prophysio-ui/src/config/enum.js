@@ -17,11 +17,6 @@ export const AppointmentBgColor = {
     [AppointmentStatus.CANCELLED]: '#FF8080',
 }
 
-export const PatientRegistrationFormViewMode = {
-    DOCTOR: 'PATIENT_APPLICATION_DOCTOR_VIEW',
-    PATIENT: 'PATIENT_APPLICATION_PATIENT_VIEW'
-}
-
 export const IdType = {
     ID_CARD: 'ID_CARD',
     PASSPORT: 'PASSPORT',
@@ -77,3 +72,8 @@ export const SpecialTest = [
     'Mills',
     'ULTT'
 ]
+
+export const PatientPortalType = {
+    REGISTRATION: 'Patient Registration Form',
+    INTAKE: 'Patient Intake Form'
+}
