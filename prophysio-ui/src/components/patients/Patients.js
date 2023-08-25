@@ -57,15 +57,16 @@ const Patients = () => {
     };
     const handleEditPatientClose = () => setOpenEditPatient(false);
 
-    const sendRegistrationForm = (patient) => {
-        alert('Registration Form Sent!');
+    const sendRegistrationForm = (patientId) => {
+        dispatch(Actions.sendRegistrationForm(patientId));
     }
 
-    const sendIntakeForm = (patient) => {
-        alert('Intake Form Sent!');
+    const sendIntakeForm = (patientId) => {
+        dispatch(Actions.sendIntakeForm(patientId));
+        dispatch(Actions.confirmIntakeForm(patientId, { status: IntakeFormStatus.PENDING }));
     }
 
-    const removePatient = (patient) => {
+    const removePatient = (patientId) => {
 
     }
 
@@ -130,8 +131,8 @@ const Patients = () => {
                                                 {row.registrationForm.status === RegistrationFormStatus.PENDING && (
                                                     <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
                                                 {row.registrationForm.status === RegistrationFormStatus.ACCEPTED && (
-                                                    <Chip label="Accepted" color="success" variant="outlined" size='small' />)}
-                                                <Chip label="Send" size='small' color='primary' onClick={sendRegistrationForm} />
+                                                    <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
+                                                <Chip label="Send" size='small' color='primary' onClick={() => sendRegistrationForm(row._id)} />
                                             </Stack>
                                         </TableCell>
                                         <TableCell component="th" scope="row">
@@ -141,8 +142,8 @@ const Patients = () => {
                                                 {row.intakeForm.status === IntakeFormStatus.PENDING && (
                                                     <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
                                                 {row.intakeForm.status === IntakeFormStatus.ACCEPTED && (
-                                                    <Chip label="Accepted" color="success" variant="outlined" size='small' />)}
-                                                <Chip label="Send" size='small' color='primary' onClick={sendIntakeForm} />
+                                                    <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
+                                                <Chip label="Send" size='small' color='primary' onClick={() => sendIntakeForm(row._id)} />
                                             </Stack>
                                         </TableCell>
                                         <TableCell component="th" scope="row">

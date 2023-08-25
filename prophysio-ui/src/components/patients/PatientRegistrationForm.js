@@ -19,7 +19,7 @@ const PatientRegistrationForm = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const registrationForm = new RegistrationForm(data);
-        dispatch(Actions.confirmRegistration(patientId, registrationForm));
+        dispatch(Actions.confirmRegistrationForm(patientId, registrationForm));
     }
 
     return (

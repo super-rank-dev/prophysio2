@@ -8,12 +8,14 @@ const intakeFormSchema = new mongoose.Schema({
         required: true,
         default: IntakeFormStatus.UNKNOWN
     },
-    bodyPart: {
-        type: String
-    },
-    questionnaire: [String],
-    objective: [String],
-    specialTest: [String]
+    data: [{
+        bodyPart: {
+            type: String
+        },
+        questionnaire: [String],
+        objective: [String],
+        specialTest: [String]
+    }]
 });
 
 // Create and export the registrationForm model

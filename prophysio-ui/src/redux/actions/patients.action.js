@@ -40,16 +40,12 @@ export const addPatient = (patient, handleClose) => dispatch => {
         );
 };
 
-// Confirm Registration
-export const confirmRegistration = (patientId, registrationForm) => dispatch => {
+// Confirm Registration Form
+export const confirmRegistrationForm = (patientId, registrationForm) => dispatch => {
     axios
-        .post(`${SERVER_ADDRESS}/api/patients/confirm-registration`, { patientId, registrationForm })
+        .post(`${SERVER_ADDRESS}/api/patients/confirm-registration-form`, { patientId, registrationForm })
         .then(res => {
-            dispatch({
-                type: CONFIRM_REGISTRATION,
-                payload: res.data
-            });
-            alert('Registration Confirmed!');
+            alert('Registration Form Submitted!');
         })
         .catch(err =>
             dispatch({
@@ -59,16 +55,12 @@ export const confirmRegistration = (patientId, registrationForm) => dispatch => 
         );
 };
 
-// Confirm Questionnaire
-export const confirmQuestionnaire = (patientId, intakeForm) => dispatch => {
+// Confirm Intake Form
+export const confirmIntakeForm = (patientId, intakeForm) => dispatch => {
     axios
-        .post(`${SERVER_ADDRESS}/api/patients/confirm-questionnaire`, { patientId, intakeForm })
+        .post(`${SERVER_ADDRESS}/api/patients/confirm-intake-form`, { patientId, intakeForm })
         .then(res => {
-            dispatch({
-                type: CONFIRM_QUESTIONNAIRE,
-                payload: res.data
-            });
-            alert('Questionnaire Confirmed!');
+            alert('Intake Form Submitted!');
         })
         .catch(err =>
             dispatch({
@@ -96,7 +88,7 @@ export const getWaitingPatients = () => dispatch => {
         );
 };
 
-// Confirm Registration
+// Save Waiting Patients
 export const saveWaitingPatients = (waitingPatients, handleClose) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/waiting-patients`, { waitingPatients })
@@ -110,3 +102,33 @@ export const saveWaitingPatients = (waitingPatients, handleClose) => dispatch =>
             })
         );
 };
+
+// Send Registration Form
+export const sendRegistrationForm = (patientId) => dispatch => {
+    axios
+        .post(`${SERVER_ADDRESS}/api/patients/send-registration-form`, { patientId })
+        .then(() => {
+            alert('Registration Form Sent!');
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+}
+
+// Send Intake Form
+export const sendIntakeForm = (patientId) => dispatch => {
+    axios
+        .post(`${SERVER_ADDRESS}/api/patients/send-intake-form`, { patientId })
+        .then(() => {
+            alert('Intake Form Sent!');
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+}

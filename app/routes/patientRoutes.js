@@ -7,7 +7,9 @@ router.get('/', patientController.getPatients);
 // router.get('/:id', patientController.getPatient);
 router.get('/waiting-patients', patientController.getWaitingPatients);
 router.post('/waiting-patients', patientController.saveWaitingPatients);
-router.post('/confirm-registration', patientController.confirmRegistration);
-router.post('/confirm-questionnaire', patientController.confirmQuestionnaire);
+router.post('/send-registration-form', patientController.sendRegistrationForm);
+router.post('/send-intake-form', patientController.sendIntakeForm);
+router.post('/confirm-registration-form', patientController.confirmRegistrationForm);
+router.post('/confirm-intake-form', patientController.confirmIntakeForm);
 
 module.exports = router;

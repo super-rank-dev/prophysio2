@@ -3,6 +3,8 @@ const nodemailer = require('nodemailer');
 const handlebars = require('handlebars');
 const { readFileSync } = require('fs');
 
+const serverConfig = require('../../config/mail-server');
+
 // const sendMessage = ({ dest, subject, content }) => {
 //     const command = `echo "${content}" | mail -s "${subject}" -a "Content-type: text/html" ${dest}`;
 
@@ -20,16 +22,16 @@ const sendMessage = async ({ dest, subject, content, data }) => {
     const template = handlebars.compile(source);
     const htmlToSend = template(data);
     const transporter = nodemailer.createTransport({
-        host: "smtp.office365.com",
-        port: 587,
+        host: serverConfig.host,
+        port: serverConfig.port,
         secure: false,
         auth: {
-            user: "pro.physio@outlook.com",
-            pass: "pro@physio v1.0"
+            user: serverConfig.user,
+            pass: serverConfig.password
         }
     });
     const mailOptions = {
-        from: 'pro.physio@outlook.com',
+        from: serverConfig.user,
         to: dest,
         subject: subject,
         html: htmlToSend
@@ -38,7 +40,7 @@ const sendMessage = async ({ dest, subject, content, data }) => {
     console.log("Message sent: %s", info.messageId);
 }
 
-exports.newAppointment = ({ service, branch, practitioner, room, patient, appointment }) => {
+exports.sendNewAppointmentMsg = ({ service, branch, practitioner, room, patient, appointment }) => {
     const theme = readFileSync('./reminder/appointment-new.html', 'utf8');
     const message = {
         dest: patient.email,
@@ -56,7 +58,7 @@ exports.newAppointment = ({ service, branch, practitioner, room, patient, appoin
     sendMessage(message);
 }
 
-exports.updateAppointment = ({ service, branch, practitioner, room, patient, appointment, reqBody }) => {
+exports.sendUpdateAppointmentMsg = ({ service, branch, practitioner, room, patient, appointment, reqBody }) => {
     const theme = readFileSync('./reminder/appointment-reschedule.html', 'utf8');
     const message = {
         dest: patient.email,
@@ -75,7 +77,7 @@ exports.updateAppointment = ({ service, branch, practitioner, room, patient, app
     sendMessage(message);
 }
 
-exports.deleteAppointment = ({ service, branch, practitioner, room, patient, appointment }) => {
+exports.sendDeleteAppointmentMsg = ({ service, branch, practitioner, room, patient, appointment }) => {
     const theme = readFileSync('./reminder/appointment-remove.html', 'utf8');
     const message = {
         dest: patient.email,
@@ -88,6 +90,35 @@ exports.deleteAppointment = ({ service, branch, practitioner, room, patient, app
             room: room._doc,
             patient: patient._doc,
             appointment: appointment._doc
+        }
+    };
+    sendMessage(message);
+}
+
+exports.sendRegistrationForm = ({ patient }) => {
+    const theme = readFileSync('./reminder/patient-registration-form.html', 'utf8');
+    const message = {
+        dest: patient.email,
+        subject: 'Prophysio v1.0 Patient Registration',
+        content: theme,
+        data: {
+            serverAddress: 'localhost:3000',
+            patientId: patient._id
+        }
+    };
+    console.log(message);
+    sendMessage(message);
+}
+
+exports.sendIntakeForm = ({ patient }) => {
+    const theme = readFileSync('./reminder/patient-intake-form.html', 'utf8');
+    const message = {
+        dest: patient.email,
+        subject: 'Prophysio v1.0 Patient Questionnaire',
+        content: theme,
+        data: {
+            serverAddress: 'localhost:3000',
+            patientId: patient._id
         }
     };
     sendMessage(message);

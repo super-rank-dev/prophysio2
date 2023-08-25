@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { PatientStatus } = require('../../config/enum');
 
 const { Schema: { Types: { ObjectId } } } = mongoose;
 

@@ -1,7 +1,6 @@
 const ejs = require('ejs');
-const { readFileSync } = require('fs');
 
-const sendMessage = require('../services/mailService');
+const mailService = require('../services/mailService');
 
 // Load Input Validation
 const validatePatientInput = require('../validation/patient');
@@ -71,17 +70,7 @@ exports.registerPatient = async (req, res) => {
         //     subject: 'Prophysio v1.0 Patient Registration',
         //     content: content.replace(/[\n\r]| {2}/g, '')
         // };
-        const theme = readFileSync('./reminder/patient-registration.html', 'utf8');
-        const message = {
-            dest: patient.email,
-            subject: 'Prophysio v1.0 Patient Registration',
-            content: theme,
-            data: {
-                serverAddress: 'localhost:3000',
-                patientId: patient._id
-            }
-        };
-        sendMessage(message);
+        mailService.sendRegistrationForm({ patient });
     };
 }
 
@@ -108,10 +97,10 @@ exports.saveWaitingPatients = async (req, res) => {
     res.json({ success: true });
 }
 
-// @route   POST api/patients
-// @desc    Register patient
+// @route   POST api/confirm-registration-form
+// @desc    Confirm Registration Form
 // @access  Public
-exports.confirmRegistration = async (req, res) => {
+exports.confirmRegistrationForm = async (req, res) => {
     // const { errors, isValid } = validatePatientInput(req.body);
     const errors = {};
     const isValid = true;
@@ -137,10 +126,10 @@ exports.confirmRegistration = async (req, res) => {
     };
 }
 
-// @route   POST api/patients
-// @desc    Register patient
+// @route   POST api/confirm-intake-form
+// @desc    Confirm intake form
 // @access  Public
-exports.confirmQuestionnaire = async (req, res) => {
+exports.confirmIntakeForm = async (req, res) => {
     // const { errors, isValid } = validatePatientInput(req.body);
     const errors = {};
     const isValid = true;
@@ -215,3 +204,21 @@ exports.getPatient = async (req, res) => {
     }
     res.json(patient);
 };
+
+// @route   POST api/send-registration-form
+// @desc    Send Registration Form
+// @access  Public
+exports.sendRegistrationForm = async (req, res) => {
+    const { patientId } = req.body;
+    const patient = await Patient.findById(patientId);
+    mailService.sendRegistrationForm({ patient });
+}
+
+// @route   POST api/send-intake-form
+// @desc    Send Intake Form
+// @access  Public
+exports.sendIntakeForm = async (req, res) => {
+    const { patientId } = req.body;
+    const patient = await Patient.findById(patientId);
+    mailService.sendIntakeForm({ patient });
+}

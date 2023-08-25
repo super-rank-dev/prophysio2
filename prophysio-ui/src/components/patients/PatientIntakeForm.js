@@ -5,7 +5,7 @@ import { Autocomplete, Avatar, Box, Button, Card, CardContent, Chip, Divider, Fo
 import QuizIcon from '@mui/icons-material/Quiz';
 import TablePaginationActions from '../global/TablePaginationActions';
 import * as Actions from '../../redux/actions';
-import { BodyPart, Objective, Questionnaire, SpecialTest } from "../../config/enum";
+import { BodyPart, IntakeFormStatus, Objective, Questionnaire, SpecialTest } from "../../config/enum";
 
 const PatientIntakeForm = () => {
 
@@ -37,7 +37,7 @@ const PatientIntakeForm = () => {
 
     const onSubmitIntakeForm = (event) => {
         event.preventDefault();
-        dispatch(Actions.confirmQuestionnaire(patientId, intakeFormData));
+        dispatch(Actions.confirmIntakeForm(patientId, { status: IntakeFormStatus.ACCEPTED, data: intakeFormData }));
     }
 
     return (

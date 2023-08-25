@@ -54,7 +54,7 @@ exports.registerAppointment = async (req, res) => {
     //     subject: 'Prophysio v1.0 Appointment',
     //     content: content.replace(/[\n\r]| {2}/g, '')
     // };
-    mailService.newAppointment({ service, branch, practitioner, room, patient, appointment });
+    mailService.sendNewAppointmentMsg({ service, branch, practitioner, room, patient, appointment });
 }
 
 // @route   GET api/appointments
@@ -112,7 +112,7 @@ exports.updateAppointment = async (req, res) => {
         //     subject: 'Prophysio v1.0 Appointment',
         //     content: content.replace(/[\n\r]| {2}/g, '')
         // };
-        mailService.updateAppointment({ service, branch, practitioner, room, patient, appointment, reqBody: req.body });
+        mailService.sendUpdateAppointmentMsg({ service, branch, practitioner, room, patient, appointment, reqBody: req.body });
     }
 
     const updatedAppointment = await Appointment.findOneAndUpdate(
@@ -134,5 +134,5 @@ exports.deleteAppointment = async (req, res) => {
     const practitioner = await User.findById(appointment.practitionerId);
     const room = await Room.findById(appointment.roomId);
     const patient = await Patient.findById(appointment.patientId);
-    mailService.deleteAppointment({ service, branch, practitioner, room, patient, appointment });
+    mailService.sendDeleteAppointmentMsg({ service, branch, practitioner, room, patient, appointment });
 }
