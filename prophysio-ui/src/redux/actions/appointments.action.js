@@ -36,7 +36,7 @@ export const getAppointment = (appointment) => dispatch => {
 };
 
 // Add Appointment
-export const addAppointment = (appointment, handleClose, successHandler) => dispatch => {
+export const addAppointment = (appointment, handleClose, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/appointments`, appointment)
         .then((res) => {
@@ -45,7 +45,7 @@ export const addAppointment = (appointment, handleClose, successHandler) => disp
                 payload: res.data
             });
             handleClose();
-            successHandler('New Appointment Created!');
+            enqueueSnackbar('New Appointment Created!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -56,7 +56,7 @@ export const addAppointment = (appointment, handleClose, successHandler) => disp
 };
 
 // Edit Appointment
-export const editAppointment = (appointment, handleClose, successHandler) => dispatch => {
+export const editAppointment = (appointment, handleClose, enqueueSnackbar) => dispatch => {
     axios
         .put(`${SERVER_ADDRESS}/api/appointments`, appointment)
         .then(() => {
@@ -65,7 +65,7 @@ export const editAppointment = (appointment, handleClose, successHandler) => dis
                 payload: appointment
             });
             handleClose();
-            successHandler('Appointment Updated!');
+            enqueueSnackbar('Appointment Updated!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -76,7 +76,7 @@ export const editAppointment = (appointment, handleClose, successHandler) => dis
 }
 
 // Remove Appointment
-export const removeAppointment = (appointmentId, handleClose, successHandler) => dispatch => {
+export const removeAppointment = (appointmentId, handleClose, enqueueSnackbar) => dispatch => {
     axios
         .delete(`${SERVER_ADDRESS}/api/appointments/${appointmentId}`)
         .then(() => {
@@ -85,7 +85,7 @@ export const removeAppointment = (appointmentId, handleClose, successHandler) =>
                 payload: appointmentId
             });
             handleClose();
-            successHandler('Appointment Removed!');
+            enqueueSnackbar('Appointment Removed!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({

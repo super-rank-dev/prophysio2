@@ -7,6 +7,7 @@ const validatePatientInput = require('../validation/patient');
 
 // Load Patient model
 const Patient = require('../models/patient');
+const Appointment = require('../models/appointment');
 const RegistrationForm = require('../models/registration_form');
 const IntakeForm = require('../models/intake_form');
 const WaitingPatient = require('../models/waiting_patient');
@@ -40,7 +41,9 @@ exports.registerPatient = async (req, res) => {
             homeAddress: req.body.address
         });
         const registrationForm = await newRegistrationForm.save();
-        const newIntakeForm = new IntakeForm();
+        const newIntakeForm = new IntakeForm({
+            data: BodyPart.map(bodyPart => ({ bodyPart }))
+        });
         const intakeForm = await newIntakeForm.save();
         const newPatient = new Patient({
             firstName: req.body.firstName,
@@ -68,6 +71,7 @@ exports.registerPatient = async (req, res) => {
 exports.deletePatient = async (req, res) => {
     const { patientId } = req.params;
     await Patient.findOneAndRemove({ _id: patientId });
+    await Appointment.deleteMany({ patientId });
     res.json({ success: true });
 }
 
@@ -233,6 +237,16 @@ exports.sendRegistrationForm = async (req, res) => {
     mailService.sendRegistrationForm({ patient });
 }
 
+// @route   GET api/get-registration-form/:patientId
+// @desc    Get Registration Form
+// @access  Public
+exports.getRegistrationForm = async (req, res) => {
+    const { patientId } = req.params;
+    const patient = await Patient.findById(patientId);
+    const registrationForm = await RegistrationForm.findById(patient.registrationForm);
+    res.json(registrationForm);
+}
+
 // @route   POST api/send-intake-form
 // @desc    Send Intake Form
 // @access  Public
@@ -240,4 +254,14 @@ exports.sendIntakeForm = async (req, res) => {
     const { patientId } = req.body;
     const patient = await Patient.findById(patientId);
     mailService.sendIntakeForm({ patient });
+}
+
+// @route   GET api/get-intake-form/:patientId
+// @desc    Get Intake Form
+// @access  Public
+exports.getIntakeForm = async (req, res) => {
+    const { patientId } = req.params;
+    const patient = await Patient.findById(patientId);
+    const intakeForm = await IntakeForm.findById(patient.intakeForm);
+    res.json(intakeForm);
 }

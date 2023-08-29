@@ -16,11 +16,13 @@ import { IntakeFormStatus, RegistrationFormStatus } from '../../config/enum';
 import * as Actions from '../../redux/actions';
 import AddPatientModal from './AddPatientModal';
 import EditPatientModal from './EditPatientModal';
+import { useSnackbar } from 'notistack';
 
 const Patients = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [currentPatient, setCurrentPatient] = useState();
+    const { enqueueSnackbar } = useSnackbar();
 
     const dispatch = useDispatch();
 
@@ -58,16 +60,20 @@ const Patients = () => {
     const handleEditPatientClose = () => setOpenEditPatient(false);
 
     const sendRegistrationForm = (patientId) => {
-        dispatch(Actions.sendRegistrationForm(patientId));
+        dispatch(Actions.sendRegistrationForm(patientId, enqueueSnackbar));
     }
 
     const sendIntakeForm = (patientId) => {
-        dispatch(Actions.sendIntakeForm(patientId));
-        dispatch(Actions.confirmIntakeForm(patientId, { status: IntakeFormStatus.PENDING }));
+        dispatch(Actions.sendIntakeForm(patientId, enqueueSnackbar));
+        dispatch(Actions.confirmIntakeForm(
+            patientId,
+            { status: IntakeFormStatus.PENDING },
+            enqueueSnackbar
+        ));
     }
 
     const removePatient = (patient) => {
-        dispatch(Actions.removePatient(patient));
+        dispatch(Actions.removePatient(patient, enqueueSnackbar));
     }
 
     return (
@@ -175,9 +181,9 @@ const Patients = () => {
                                         page={page}
                                         SelectProps={{
                                             inputProps: {
-                                                'aria-label': 'rows per page',
+                                                'aria-label': 'rows per page'
                                             },
-                                            native: true,
+                                            native: true
                                         }}
                                         onPageChange={handleChangePage}
                                         onRowsPerPageChange={handleChangeRowsPerPage}

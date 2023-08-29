@@ -74,10 +74,6 @@ const AddAppointment = ({ open, handleClose }) => {
 
     const error = useSelector(({ error }) => error);
 
-    const successHandler = (msg) => {
-        enqueueSnackbar(msg, { variant: 'success' });
-    }
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -93,7 +89,7 @@ const AddAppointment = ({ open, handleClose }) => {
             patientId: data.get('patient'),
             status: AppointmentStatus.BOOKED
         });
-        dispatch(Actions.addAppointment(appointment, handleClose, successHandler));
+        dispatch(Actions.addAppointment(appointment, handleClose, enqueueSnackbar));
     };
 
     return (

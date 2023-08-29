@@ -7,7 +7,9 @@ import {
     CONFIRM_REGISTRATION_FORM,
     GET_WAITING_PATIENTS,
     CONFIRM_INTAKE_FORM,
-    REMOVE_PATIENT
+    REMOVE_PATIENT,
+    GET_REGISTRATION_FORM,
+    GET_INTAKE_FORM
 } from '../types';
 
 // Get All Patients
@@ -29,7 +31,7 @@ export const getAllPatients = () => dispatch => {
 };
 
 // Add Patient Request
-export const addPatient = (patient, handleClose) => dispatch => {
+export const addPatient = (patient, handleClose, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients`, patient)
         .then(res => {
@@ -38,6 +40,7 @@ export const addPatient = (patient, handleClose) => dispatch => {
                 payload: res.data
             })
             handleClose();
+            enqueueSnackbar('New Patient Added!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -48,7 +51,7 @@ export const addPatient = (patient, handleClose) => dispatch => {
 };
 
 // Remove Patient
-export const removePatient = (patient) => dispatch => {
+export const removePatient = (patient, enqueueSnackbar) => dispatch => {
     axios
         .delete(`${SERVER_ADDRESS}/api/patients/${patient._id}`)
         .then(res => {
@@ -56,6 +59,7 @@ export const removePatient = (patient) => dispatch => {
                 type: REMOVE_PATIENT,
                 payload: patient
             })
+            enqueueSnackbar('Patient Removed!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -66,7 +70,7 @@ export const removePatient = (patient) => dispatch => {
 };
 
 // Confirm Registration Form
-export const confirmRegistrationForm = (patientId, registrationForm) => dispatch => {
+export const confirmRegistrationForm = (patientId, registrationForm, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/confirm-registration-form`, { patientId, registrationForm })
         .then(res => {
@@ -74,7 +78,7 @@ export const confirmRegistrationForm = (patientId, registrationForm) => dispatch
                 type: CONFIRM_REGISTRATION_FORM,
                 payload: patientId
             });
-            alert('Registration Form Submitted!');
+            enqueueSnackbar('Registration Form Submitted!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -85,7 +89,7 @@ export const confirmRegistrationForm = (patientId, registrationForm) => dispatch
 };
 
 // Confirm Intake Form
-export const confirmIntakeForm = (patientId, intakeForm) => dispatch => {
+export const confirmIntakeForm = (patientId, intakeForm, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/confirm-intake-form`, { patientId, intakeForm })
         .then(res => {
@@ -93,7 +97,7 @@ export const confirmIntakeForm = (patientId, intakeForm) => dispatch => {
                 type: CONFIRM_INTAKE_FORM,
                 payload: patientId
             });
-            alert('Intake Form Submitted!');
+            enqueueSnackbar('Intake Form Submitted!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -122,11 +126,12 @@ export const getWaitingPatients = () => dispatch => {
 };
 
 // Save Waiting Patients
-export const saveWaitingPatients = (waitingPatients, handleClose) => dispatch => {
+export const saveWaitingPatients = (waitingPatients, handleClose, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/waiting-patients`, { waitingPatients })
         .then(() => {
             handleClose();
+            enqueueSnackbar('Waiting Patients Saved!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -137,11 +142,29 @@ export const saveWaitingPatients = (waitingPatients, handleClose) => dispatch =>
 };
 
 // Send Registration Form
-export const sendRegistrationForm = (patientId) => dispatch => {
+export const sendRegistrationForm = (patientId, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/send-registration-form`, { patientId })
         .then(() => {
-            alert('Registration Form Sent!');
+            enqueueSnackbar('Registration Form Sent!', { variant: 'success' });
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+}
+
+// Get Registration Form
+export const getRegistrationForm = (patientId) => dispatch => {
+    axios
+        .get(`${SERVER_ADDRESS}/api/patients/get-registration-form/${patientId}`)
+        .then(res => {
+            dispatch({
+                type: GET_REGISTRATION_FORM,
+                payload: res.data
+            })
         })
         .catch(err =>
             dispatch({
@@ -152,11 +175,29 @@ export const sendRegistrationForm = (patientId) => dispatch => {
 }
 
 // Send Intake Form
-export const sendIntakeForm = (patientId) => dispatch => {
+export const sendIntakeForm = (patientId, enqueueSnackbar) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/patients/send-intake-form`, { patientId })
         .then(() => {
-            alert('Intake Form Sent!');
+            enqueueSnackbar('Intake Form Sent!', { variant: 'success' });
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+}
+
+// Get Intake Form
+export const getIntakeForm = (patientId) => dispatch => {
+    axios
+        .get(`${SERVER_ADDRESS}/api/patients/get-intake-form/${patientId}`)
+        .then(res => {
+            dispatch({
+                type: GET_INTAKE_FORM,
+                payload: res.data
+            });
         })
         .catch(err =>
             dispatch({

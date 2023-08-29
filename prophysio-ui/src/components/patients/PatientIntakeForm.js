@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-import { Autocomplete, Avatar, Box, Button, Card, CardContent, Chip, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material";
+import { Autocomplete, Avatar, Box, Button, Card, CardContent, Divider, Stack, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material";
 import QuizIcon from '@mui/icons-material/Quiz';
 import TablePaginationActions from '../global/TablePaginationActions';
 import * as Actions from '../../redux/actions';
 import { BodyPart, IntakeFormStatus, Objective, Questionnaire, SpecialTest } from "../../config/enum";
+import { useSnackbar } from 'notistack';
 
 const PatientIntakeForm = () => {
 
     const { patientId } = useParams();
+    const { enqueueSnackbar } = useSnackbar();
 
     const dispatch = useDispatch();
     const [intakeFormData, setIntakeFormData] = useState([]);
@@ -18,6 +20,16 @@ const PatientIntakeForm = () => {
         const data = BodyPart.map(bodyPart => ({ bodyPart }));
         setIntakeFormData(data);
     }, [BodyPart]);
+
+    useEffect(() => {
+        dispatch(Actions.getIntakeForm(patientId));
+    }, [dispatch]);
+
+    const { intakeForm } = useSelector(({ patients }) => (patients));
+
+    useEffect(() => {
+        setIntakeFormData(intakeForm.data);
+    }, [intakeForm]);
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -37,7 +49,11 @@ const PatientIntakeForm = () => {
 
     const onSubmitIntakeForm = (event) => {
         event.preventDefault();
-        dispatch(Actions.confirmIntakeForm(patientId, { status: IntakeFormStatus.ACCEPTED, data: intakeFormData }));
+        dispatch(Actions.confirmIntakeForm(
+            patientId,
+            { status: IntakeFormStatus.ACCEPTED, data: intakeFormData },
+            enqueueSnackbar
+        ));
     }
 
     return (
@@ -74,80 +90,93 @@ const PatientIntakeForm = () => {
                                         ? BodyPart.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         : BodyPart
                                     ).map((row, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell component="th" scope="row">
-                                                {index + 1}
-                                            </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {row}
-                                            </TableCell>
-                                            <TableCell component="th" scope="row" sx={{ verticalAlign: 'bottom' }}>
-                                                <Autocomplete
-                                                    multiple
-                                                    filterSelectedOptions
-                                                    options={Questionnaire}
-                                                    renderInput={params => (
-                                                        <TextField
-                                                            {...params}
-                                                            label="Questionnaire associated with intake form"
-                                                            variant="standard"
-                                                        />
-                                                    )}
-                                                    onChange={(event, questionnaire) => {
-                                                        const data = [...intakeFormData];
-                                                        data[index] = {
-                                                            ...data[index],
-                                                            questionnaire
-                                                        }
-                                                        setIntakeFormData(data);
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell component="th" scope="row" sx={{ verticalAlign: 'bottom' }}>
-                                                <Autocomplete
-                                                    multiple
-                                                    filterSelectedOptions
-                                                    options={Objective}
-                                                    renderInput={params => (
-                                                        <TextField
-                                                            {...params}
-                                                            label="Objective"
-                                                            variant="standard"
-                                                        />
-                                                    )}
-                                                    onChange={(event, objective) => {
-                                                        const data = [...intakeFormData];
-                                                        data[index] = {
-                                                            ...data[index],
-                                                            objective
-                                                        }
-                                                        setIntakeFormData(data);
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell component="th" scope="row" sx={{ verticalAlign: 'bottom' }}>
-                                                <Autocomplete
-                                                    multiple
-                                                    filterSelectedOptions
-                                                    options={SpecialTest}
-                                                    renderInput={params => (
-                                                        <TextField
-                                                            {...params}
-                                                            label="SpecialTest"
-                                                            variant="standard"
-                                                        />
-                                                    )}
-                                                    onChange={(event, specialTest) => {
-                                                        const data = [...intakeFormData];
-                                                        data[index] = {
-                                                            ...data[index],
-                                                            specialTest
-                                                        }
-                                                        setIntakeFormData(data);
-                                                    }}
-                                                />
-                                            </TableCell>
-                                        </TableRow>
+                                        <>
+                                            {intakeFormData && intakeFormData[index] && (
+                                                <TableRow key={index}>
+                                                    <TableCell component="th" scope="row">
+                                                        {index + 1}
+                                                    </TableCell>
+                                                    <TableCell component="th" scope="row">
+                                                        {row}
+                                                    </TableCell>
+                                                    <TableCell component="th" scope="row" sx={{ verticalAlign: 'bottom' }}>
+                                                        {intakeFormData[index].questionnaire && (
+                                                            <Autocomplete
+                                                                multiple
+                                                                filterSelectedOptions
+                                                                options={Questionnaire}
+                                                                value={intakeFormData[index].questionnaire}
+                                                                renderInput={params => (
+                                                                    <TextField
+                                                                        {...params}
+                                                                        label="Questionnaire associated with intake form"
+                                                                        variant="standard"
+                                                                    />
+                                                                )}
+                                                                onChange={(event, questionnaire) => {
+                                                                    const data = [...intakeFormData];
+                                                                    data[index] = {
+                                                                        ...data[index],
+                                                                        questionnaire
+                                                                    }
+                                                                    setIntakeFormData(data);
+                                                                }}
+                                                            />
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell component="th" scope="row" sx={{ verticalAlign: 'bottom' }}>
+                                                        {intakeFormData[index].objective && (
+                                                            <Autocomplete
+                                                                multiple
+                                                                filterSelectedOptions
+                                                                options={Objective}
+                                                                value={intakeFormData[index].objective}
+                                                                renderInput={params => (
+                                                                    <TextField
+                                                                        {...params}
+                                                                        label="Objective"
+                                                                        variant="standard"
+                                                                    />
+                                                                )}
+                                                                onChange={(event, objective) => {
+                                                                    const data = [...intakeFormData];
+                                                                    data[index] = {
+                                                                        ...data[index],
+                                                                        objective
+                                                                    }
+                                                                    setIntakeFormData(data);
+                                                                }}
+                                                            />
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell component="th" scope="row" sx={{ verticalAlign: 'bottom' }}>
+                                                        {intakeFormData[index].specialTest && (
+                                                            <Autocomplete
+                                                                multiple
+                                                                filterSelectedOptions
+                                                                options={SpecialTest}
+                                                                value={intakeFormData[index].specialTest}
+                                                                renderInput={params => (
+                                                                    <TextField
+                                                                        {...params}
+                                                                        label="SpecialTest"
+                                                                        variant="standard"
+                                                                    />
+                                                                )}
+                                                                onChange={(event, specialTest) => {
+                                                                    const data = [...intakeFormData];
+                                                                    data[index] = {
+                                                                        ...data[index],
+                                                                        specialTest
+                                                                    }
+                                                                    setIntakeFormData(data);
+                                                                }}
+                                                            />
+                                                        )}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </>
                                     ))}
                                     {emptyRows > 0 && (
                                         <TableRow style={{ height: 50 * emptyRows }}>

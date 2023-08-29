@@ -6,6 +6,7 @@ import { countries } from "countries-list";
 import { IdType } from "../../config/enum";
 import RegistrationForm from '../../models/registration_form.model';
 import * as Actions from '../../redux/actions';
+import { enqueueSnackbar } from "notistack";
 
 const countryCodes = Object.keys(countries);
 
@@ -19,7 +20,11 @@ const PatientRegistrationForm = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const registrationForm = new RegistrationForm(data);
-        dispatch(Actions.confirmRegistrationForm(patientId, registrationForm));
+        dispatch(Actions.confirmRegistrationForm(
+            patientId,
+            registrationForm,
+            enqueueSnackbar
+        ));
     }
 
     return (

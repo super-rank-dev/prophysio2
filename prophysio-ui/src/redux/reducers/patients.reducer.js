@@ -5,7 +5,9 @@ import {
     GET_WAITING_PATIENTS,
     REMOVE_PATIENT,
     CONFIRM_REGISTRATION_FORM,
-    CONFIRM_INTAKE_FORM
+    CONFIRM_INTAKE_FORM,
+    GET_REGISTRATION_FORM,
+    GET_INTAKE_FORM
 } from '../types';
 
 const initialState = {
@@ -13,7 +15,9 @@ const initialState = {
     patient: {},
     requests: [],
     request: {},
-    waitingPatients: []
+    waitingPatients: [],
+    registrationForm: {},
+    intakeForm: {}
 };
 
 export default function (state = initialState, action) {
@@ -41,6 +45,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 waitingPatients: action.payload
+            };
+        case GET_REGISTRATION_FORM:
+            return {
+                ...state,
+                registrationForm: action.payload
+            };
+        case GET_INTAKE_FORM:
+            return {
+                ...state,
+                intakeForm: action.payload
             };
         case CONFIRM_REGISTRATION_FORM:
             return {

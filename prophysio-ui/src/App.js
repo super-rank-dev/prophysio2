@@ -27,6 +27,7 @@ import PatientPortal from './components/patients/PatientPortal';
 import { PatientPortalType } from './config/enum';
 import PatientIntakeForm from './components/patients/PatientIntakeForm';
 import PatientRegistrationForm from './components/patients/PatientRegistrationForm';
+import { SnackbarProvider } from 'notistack';
 
 const App = () => {
 
@@ -54,32 +55,34 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <Router>
-                <Routes>
-                    <Route index element={<Landing />} />
-                    <Route path='home' element={<Layout />}>
-                        <Route index element={<Dashboard />} />
-                        <Route path='*' element={<ProtectedRoute />}>
-                            <Route path='patients' element={<Patients />} />
-                            <Route path='add-patient' element={<AddPatient />} />
-                            <Route path='add-patient-requests' element={<AddPatientRequests />} />
-                            <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
-                            <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
-                            <Route path='guarantors' element={<Guarantors />} />
-                            <Route path='appointments' element={<Appointments />} />
-                            <Route path='billing' element={<Billing />} />
-                            <Route path='invoices' element={<Invoices />} />
-                            <Route path='statement' element={<Statement />} />
-                            <Route path='settings' element={<Settings />} />
-                            <Route path='users' element={<Users />} />
+            <SnackbarProvider>
+                <Router>
+                    <Routes>
+                        <Route index element={<Landing />} />
+                        <Route path='home' element={<Layout />}>
+                            <Route index element={<Dashboard />} />
+                            <Route path='*' element={<ProtectedRoute />}>
+                                <Route path='patients' element={<Patients />} />
+                                <Route path='add-patient' element={<AddPatient />} />
+                                <Route path='add-patient-requests' element={<AddPatientRequests />} />
+                                <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
+                                <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
+                                <Route path='guarantors' element={<Guarantors />} />
+                                <Route path='appointments' element={<Appointments />} />
+                                <Route path='billing' element={<Billing />} />
+                                <Route path='invoices' element={<Invoices />} />
+                                <Route path='statement' element={<Statement />} />
+                                <Route path='settings' element={<Settings />} />
+                                <Route path='users' element={<Users />} />
+                            </Route>
                         </Route>
-                    </Route>
-                    <Route path='login' element={<Login />} />
-                    <Route path='register' element={<Register />} />
-                    <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
-                    <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
-                </Routes>
-            </Router>
+                        <Route path='login' element={<Login />} />
+                        <Route path='register' element={<Register />} />
+                        <Route path='patient-registration/:patientId' element={<PatientPortal type={PatientPortalType.REGISTRATION} />} />
+                        <Route path='patient-intake/:patientId' element={<PatientPortal type={PatientPortalType.INTAKE} />} />
+                    </Routes>
+                </Router>
+            </SnackbarProvider>
         </Provider >
     );
 }

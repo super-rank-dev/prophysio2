@@ -74,21 +74,17 @@ const EditAppointment = ({ open, handleClose }) => {
 
     const error = useSelector(({ error }) => error);
 
-    const successHandler = (msg) => {
-        enqueueSnackbar(msg, { variant: 'success' });
-    }
-
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(Actions.editAppointment({
             ...appointment,
             startTime: new Date(appointment.startTime).toISOString(),
             endTime: new Date(appointment.endTime).toISOString()
-        }, handleClose, successHandler));
+        }, handleClose, enqueueSnackbar));
     };
 
     const handleRemove = () => {
-        dispatch(Actions.removeAppointment(appointment.id, handleClose, successHandler));
+        dispatch(Actions.removeAppointment(appointment.id, handleClose, enqueueSnackbar));
     };
 
     return (

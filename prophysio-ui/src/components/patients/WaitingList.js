@@ -24,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import * as Actions from '../../redux/actions';
+import { enqueueSnackbar } from "notistack";
 
 const WaitingList = ({ handleClose }) => {
 
@@ -48,7 +49,7 @@ const WaitingList = ({ handleClose }) => {
         );
     }
     const saveWaitingPatients = () => {
-        dispatch(Actions.saveWaitingPatients(waitingList, handleClose));
+        dispatch(Actions.saveWaitingPatients(waitingList, handleClose, enqueueSnackbar));
     }
 
     useEffect(() => {
