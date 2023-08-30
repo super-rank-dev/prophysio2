@@ -2,4 +2,4 @@
 
 # dependencies
 /node_modules
-/config/mail-server.js
+/config
