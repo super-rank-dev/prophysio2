@@ -210,16 +210,16 @@ exports.getPatients = async (req, res) => {
     res.json(patients);
 };
 
-// @route   GET api/patients/:id
+// @route   GET api/patients/:patientId
 // @desc    Get Patient
 // @access  Public
 exports.getPatient = async (req, res) => {
     const errors = {};
 
-    const { id } = req.params;
+    const { patientId } = req.params;
 
     // Find patient by id
-    const patient = await Patient.findById(id);
+    const patient = await Patient.findById(patientId);
     // Check for patient
     if (!patient) {
         errors.msg = 'Patient not found';

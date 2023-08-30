@@ -13,6 +13,10 @@ import Dashboard from './components/dashboard/Dashboard';
 import Patients from './components/patients/Patients';
 import AddPatient from './components/patients/AddPatient';
 import AddPatientRequests from './components/patients/AddPatientRequests';
+import PatientProfile from './components/patients/PatientProfile';
+import PatientIntakeForm from './components/patients/PatientIntakeForm';
+import PatientRegistrationForm from './components/patients/PatientRegistrationForm';
+import PatientPortal from './components/patients/PatientPortal';
 import Guarantors from './components/guarantors/Guarantors';
 import Appointments from './components/appointments/Appointments';
 import Billing from './components/billing/Billing';
@@ -23,10 +27,7 @@ import Users from './components/users/Users';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 
 import './App.css';
-import PatientPortal from './components/patients/PatientPortal';
 import { PatientPortalType } from './config/enum';
-import PatientIntakeForm from './components/patients/PatientIntakeForm';
-import PatientRegistrationForm from './components/patients/PatientRegistrationForm';
 import { SnackbarProvider } from 'notistack';
 
 const App = () => {
@@ -65,6 +66,7 @@ const App = () => {
                                 <Route path='patients' element={<Patients />} />
                                 <Route path='add-patient' element={<AddPatient />} />
                                 <Route path='add-patient-requests' element={<AddPatientRequests />} />
+                                <Route path='patient-profile/:patientId' element={<PatientProfile />} />
                                 <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
                                 <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
                                 <Route path='guarantors' element={<Guarantors />} />

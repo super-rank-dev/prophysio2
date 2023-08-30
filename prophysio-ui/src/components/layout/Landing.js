@@ -1,14 +1,19 @@
 import { Button, Stack } from '@mui/material';
 import { ReactComponent as LogoSvg } from '../../logo.svg';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Landing = () => {
 
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        navigate('/home');
+    }, []);
 
     return (
         <div className="bgimg">
-            <div className="topleft">
+            {/* <div className="topleft">
                 <LogoSvg />
             </div>
             <div className="middle">
@@ -30,7 +35,7 @@ const Landing = () => {
             </div>
             <div className="bottomleft">
                 <p>v1.0</p>
-            </div>
+            </div> */}
         </div>
     );
 }
