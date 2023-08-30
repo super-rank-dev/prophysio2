@@ -80,130 +80,134 @@ const Patients = () => {
         <Stack spacing={2}>
             <Typography variant="h6">Patients</Typography>
             <Divider />
-            <Card
-                component={'form'}
-                noValidate
-            >
-                <CardContent>
-                    <TableContainer>
-                        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>No</TableCell>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Email</TableCell>
-                                    <TableCell>Date of Birth</TableCell>
-                                    <TableCell>Gender</TableCell>
-                                    <TableCell>Phone Number</TableCell>
-                                    <TableCell>Address</TableCell>
-                                    <TableCell>Emergency Contact</TableCell>
-                                    <TableCell>Registration</TableCell>
-                                    <TableCell>Questionnaire</TableCell>
-                                    <TableCell>Actions</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(rowsPerPage > 0
-                                    ? patients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    : patients
-                                ).map((row, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell component="th" scope="row">
-                                            {index + 1}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.firstName} {row.lastName}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.email}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.dateOfBirth}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.gender}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.phoneNumber}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.address}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.emergencyContact}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            <Stack spacing={1}>
-                                                {row.registrationForm.status === RegistrationFormStatus.PENDING && (
-                                                    <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
-                                                {row.registrationForm.status === RegistrationFormStatus.ACCEPTED && (
-                                                    <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
-                                                <Chip label="Resend" size='small' color='primary' onClick={() => sendRegistrationForm(row._id)} />
-                                            </Stack>
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            <Stack spacing={1}>
-                                                {row.intakeForm.status === IntakeFormStatus.UNKNOWN && (
-                                                    <Chip label="Unknown" color="secondary" variant="outlined" size='small' />)}
-                                                {row.intakeForm.status === IntakeFormStatus.PENDING && (
-                                                    <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
-                                                {row.intakeForm.status === IntakeFormStatus.ACCEPTED && (
-                                                    <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
-                                                <Chip
-                                                    label={row.intakeForm.status === IntakeFormStatus.UNKNOWN ? 'Send' : 'Resend'}
-                                                    size='small'
-                                                    color='primary'
-                                                    onClick={() => sendIntakeForm(row._id)}
-                                                />
-                                            </Stack>
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            <Stack sx={{ display: 'block' }}>
-                                                <IconButton onClick={() => handleEditPatientOpen(row)}><EditIcon /></IconButton>
-                                                <IconButton onClick={() => removePatient(row)}><DeleteIcon /></IconButton>
-                                            </Stack>
-                                        </TableCell>
+            {patients ? (
+                <Card
+                    component={'form'}
+                    noValidate
+                >
+                    <CardContent>
+                        <TableContainer>
+                            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>No</TableCell>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Date of Birth</TableCell>
+                                        <TableCell>Gender</TableCell>
+                                        <TableCell>Phone Number</TableCell>
+                                        <TableCell>Address</TableCell>
+                                        <TableCell>Emergency Contact</TableCell>
+                                        <TableCell>Registration</TableCell>
+                                        <TableCell>Questionnaire</TableCell>
+                                        <TableCell>Actions</TableCell>
                                     </TableRow>
-                                ))}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 50 * emptyRows }}>
-                                        <TableCell colSpan={11} />
+                                </TableHead>
+                                <TableBody>
+                                    {(rowsPerPage > 0
+                                        ? patients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        : patients
+                                    ).map((row, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell component="th" scope="row">
+                                                {index + 1}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.firstName} {row.lastName}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.email}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.dateOfBirth}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.gender}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.phoneNumber}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.address}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.emergencyContact}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                <Stack spacing={1}>
+                                                    {row.registrationForm.status === RegistrationFormStatus.PENDING && (
+                                                        <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
+                                                    {row.registrationForm.status === RegistrationFormStatus.ACCEPTED && (
+                                                        <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
+                                                    <Chip label="Resend" size='small' color='primary' onClick={() => sendRegistrationForm(row._id)} />
+                                                </Stack>
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                <Stack spacing={1}>
+                                                    {row.intakeForm.status === IntakeFormStatus.UNKNOWN && (
+                                                        <Chip label="Unknown" color="secondary" variant="outlined" size='small' />)}
+                                                    {row.intakeForm.status === IntakeFormStatus.PENDING && (
+                                                        <Chip label="Pending" color="primary" variant="outlined" size='small' />)}
+                                                    {row.intakeForm.status === IntakeFormStatus.ACCEPTED && (
+                                                        <Chip label="Confirmed" color="success" variant="outlined" size='small' />)}
+                                                    <Chip
+                                                        label={row.intakeForm.status === IntakeFormStatus.UNKNOWN ? 'Send' : 'Resend'}
+                                                        size='small'
+                                                        color='primary'
+                                                        onClick={() => sendIntakeForm(row._id)}
+                                                    />
+                                                </Stack>
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                <Stack sx={{ display: 'block' }}>
+                                                    <IconButton onClick={() => handleEditPatientOpen(row)}><EditIcon /></IconButton>
+                                                    <IconButton onClick={() => removePatient(row)}><DeleteIcon /></IconButton>
+                                                </Stack>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                    {emptyRows > 0 && (
+                                        <TableRow style={{ height: 50 * emptyRows }}>
+                                            <TableCell colSpan={11} />
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                            colSpan={11}
+                                            count={patients.length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            SelectProps={{
+                                                inputProps: {
+                                                    'aria-label': 'rows per page'
+                                                },
+                                                native: true
+                                            }}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
                                     </TableRow>
-                                )}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={11}
-                                        count={patients.length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        SelectProps={{
-                                            inputProps: {
-                                                'aria-label': 'rows per page'
-                                            },
-                                            native: true
-                                        }}
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
-                </CardContent>
-                <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <ButtonGroup>
-                        <Button
-                            variant='outlined'
-                            startIcon={<AddCircleIcon />}
-                            onClick={handleAddPatientOpen}
-                        >Add</Button>
-                    </ButtonGroup>
-                </CardActions>
-            </Card>
+                                </TableFooter>
+                            </Table>
+                        </TableContainer>
+                    </CardContent>
+                    <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <ButtonGroup>
+                            <Button
+                                variant='outlined'
+                                startIcon={<AddCircleIcon />}
+                                onClick={handleAddPatientOpen}
+                            >Add</Button>
+                        </ButtonGroup>
+                    </CardActions>
+                </Card>
+            ) : (
+                <div>Loading...</div>
+            )}
             <AddPatientModal
                 open={openAddPatient}
                 handleClose={handleAddPatientClose}

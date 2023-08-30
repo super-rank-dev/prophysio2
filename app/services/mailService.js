@@ -4,6 +4,7 @@ const handlebars = require('handlebars');
 const { readFileSync } = require('fs');
 
 const serverConfig = require('../../config/mail-server');
+const { serverAddress } = require('../../config/key');
 
 const sendMessage = async ({ dest, subject, content, data }) => {
     const source = content.toString();
@@ -90,7 +91,7 @@ exports.sendRegistrationForm = ({ patient }) => {
         subject: 'Prophysio v1.0 Patient Registration',
         content: theme,
         data: {
-            serverAddress: 'localhost:3000',
+            serverAddress,
             patientId: patient._id
         }
     };
@@ -104,7 +105,7 @@ exports.sendIntakeForm = ({ patient }) => {
         subject: 'Prophysio v1.0 Patient Questionnaire',
         content: theme,
         data: {
-            serverAddress: 'localhost:3000',
+            serverAddress,
             patientId: patient._id
         }
     };
