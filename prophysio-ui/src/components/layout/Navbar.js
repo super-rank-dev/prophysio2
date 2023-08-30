@@ -12,9 +12,11 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { HealthAndSafety } from '@mui/icons-material';
 import * as Actions from '../../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ handleDrawerToggle }) => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [anchorElUser, setAnchorElUser] = useState(null);
     const { isAuthenticated } = useSelector(({ auth }) => auth);
@@ -129,10 +131,10 @@ const Navbar = ({ handleDrawerToggle }) => {
                         </>
                     ) : (
                         <>
-                            <IconButton aria-label="login" href='/login'>
+                            <IconButton aria-label="login" onClick={() => navigate('/login')}>
                                 <LoginIcon />
                             </IconButton>
-                            <IconButton aria-label="register" href='/register'>
+                            <IconButton aria-label="register" onClick={() => navigate('/register')}>
                                 <PersonAddIcon />
                             </IconButton>
                         </>

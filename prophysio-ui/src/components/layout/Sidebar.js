@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -66,6 +67,9 @@ const additionalPages = [
 ];
 
 const Sidebar = () => {
+
+    const navigate = useNavigate();
+
     return (
         <div>
             <Toolbar />
@@ -73,7 +77,7 @@ const Sidebar = () => {
             <List>
                 {pages.map(({ text, icon, href }) => (
                     <ListItem key={text} disablePadding>
-                        <ListItemButton href={href}>
+                        <ListItemButton onClick={() => navigate(href)}>
                             <ListItemIcon>
                                 {icon}
                             </ListItemIcon>
@@ -86,7 +90,7 @@ const Sidebar = () => {
             <List>
                 {additionalPages.map(({ text, icon, href }) => (
                     <ListItem key={text} disablePadding>
-                        <ListItemButton href={href}>
+                        <ListItemButton onClick={() => navigate(href)}>
                             <ListItemIcon>
                                 {icon}
                             </ListItemIcon>
