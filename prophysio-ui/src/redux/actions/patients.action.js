@@ -49,7 +49,7 @@ export const getAllPatients = () => dispatch => {
 export const getPatient = (patientId) => dispatch => {
     dispatch(setPatientsLoading());
     axios
-        .get(`${SERVER_ADDRESS}/api/patients/${patientId}`)
+        .get(`${SERVER_ADDRESS}/api/patients/patient/${patientId}`)
         .then(res => {
             dispatch({
                 type: GET_PATIENT,
@@ -68,7 +68,7 @@ export const getPatient = (patientId) => dispatch => {
 // Add Patient Request
 export const addPatient = (patient, handleClose, enqueueSnackbar) => dispatch => {
     axios
-        .post(`${SERVER_ADDRESS}/api/patients`, patient)
+        .post(`${SERVER_ADDRESS}/api/patients/patient`, patient)
         .then(res => {
             dispatch({
                 type: ADD_PATIENT,
@@ -88,7 +88,7 @@ export const addPatient = (patient, handleClose, enqueueSnackbar) => dispatch =>
 export const updatePatient = (patient, enqueueSnackbar) => dispatch => {
     console.log(patient);
     axios
-        .put(`${SERVER_ADDRESS}/api/patients`, patient)
+        .put(`${SERVER_ADDRESS}/api/patients/patient`, patient)
         .then(res => {
             enqueueSnackbar('Patient Updated!', { variant: 'success' });
         })
@@ -103,7 +103,7 @@ export const updatePatient = (patient, enqueueSnackbar) => dispatch => {
 // Remove Patient
 export const removePatient = (patient, enqueueSnackbar) => dispatch => {
     axios
-        .delete(`${SERVER_ADDRESS}/api/patients/${patient._id}`)
+        .delete(`${SERVER_ADDRESS}/api/patients/patient/${patient._id}`)
         .then(res => {
             dispatch({
                 type: REMOVE_PATIENT,

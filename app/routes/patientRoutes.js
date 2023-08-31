@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const patientController = require('../controllers/patientController');
 
-router.post('/', patientController.registerPatient);
 router.get('/', patientController.getPatients);
-router.put('/', patientController.updatePatient);
-router.get('/:patientId', patientController.getPatient);
-router.delete('/:patientId', patientController.deletePatient);
+router.post('/patient', patientController.registerPatient);
+router.put('/patient', patientController.updatePatient);
+router.get('/patient/:patientId', patientController.getPatient);
+router.delete('/patient/:patientId', patientController.deletePatient);
 router.get('/waiting-patients', patientController.getWaitingPatients);
 router.post('/waiting-patients', patientController.saveWaitingPatients);
 router.post('/send-registration-form', patientController.sendRegistrationForm);

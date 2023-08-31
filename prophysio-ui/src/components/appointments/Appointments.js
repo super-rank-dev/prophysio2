@@ -83,18 +83,12 @@ const Appointments = () => {
         <Stack spacing={2}>
             <Grid container>
                 <Grid item xs={12} md={6} lg={4} xl={3}>
-                    <ButtonGroup variant="outlined" fullWidth>
-                        <Button
-                            startIcon={<AddCircleIcon />}
-                            color='success'
-                            onClick={handleAddPatientOpen}
-                        >Add Patient</Button>
-                        <Button
-                            startIcon={<HourglassEmptyIcon />}
-                            color='secondary'
-                            onClick={handleWaitingListOpen}
-                        >Waiting List</Button>
-                    </ButtonGroup>
+                    <Button
+                        color='secondary'
+                        variant='outlined'
+                        startIcon={<HourglassEmptyIcon />}
+                        onClick={handleWaitingListOpen}
+                    >Waiting List</Button>
                 </Grid>
                 <Box flexGrow={1} p={1} display={{ xs: 'block', md: 'none', lg: 'block' }}></Box>
                 <Grid item xs={12} md={6} lg={4} xl={3}>
@@ -114,7 +108,7 @@ const Appointments = () => {
                     </ButtonGroup>
                 </Grid>
             </Grid>
-            <AddAppointment open={openAddAppointment} handleClose={handleAddAppointmentClose} />
+            <AddAppointment open={openAddAppointment} handleClose={handleAddAppointmentClose} handleAddPatientOpen={handleAddPatientOpen} />
             <EditAppointment open={openEditAppointment} handleClose={handleEditAppointmentClose} />
             <AddPatientModal open={openAddPatient} handleClose={handleAddPatientClose} />
             <WaitingListModal open={openWaitingList} handleClose={handleWaitingListClose} />

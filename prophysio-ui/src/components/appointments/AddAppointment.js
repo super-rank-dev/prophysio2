@@ -6,17 +6,30 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
-import { Button, ButtonGroup, Divider, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import {
+    Button,
+    ButtonGroup,
+    Divider,
+    FormControl,
+    FormHelperText,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+    TextField
+} from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { makeStyles } from '@mui/styles';
-import * as Actions from '../../redux/actions';
-import AppointmentModel from '../../models/appointment.model';
-import { AppointmentStatus } from '../../config/enum';
 import { useSnackbar } from 'notistack';
+import { AppointmentStatus } from '../../config/enum';
+import AppointmentModel from '../../models/appointment.model';
+import * as Actions from '../../redux/actions';
 
 const useStyles = makeStyles({
     appointmentModal: {
@@ -43,7 +56,7 @@ const useStyles = makeStyles({
     }
 });
 
-const AddAppointment = ({ open, handleClose }) => {
+const AddAppointment = ({ open, handleClose, handleAddPatientOpen }) => {
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -227,7 +240,7 @@ const AddAppointment = ({ open, handleClose }) => {
                                                 value={dayjs(appointment.endTime)}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} p={2}>
+                                        <Grid item xs={12} md={6} lg={8} p={2}>
                                             <FormControl required fullWidth size='small' error={error.patientId}>
                                                 <InputLabel>Patient</InputLabel>
                                                 <Select
@@ -244,6 +257,16 @@ const AddAppointment = ({ open, handleClose }) => {
                                                 </Select>
                                                 <FormHelperText>{error.patientId}</FormHelperText>
                                             </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} md={6} lg={4} p={2}>
+                                            <Button
+                                                fullWidth
+                                                color='success'
+                                                variant='outlined'
+                                                sx={{ height: '40px' }}
+                                                startIcon={<AddCircleIcon />}
+                                                onClick={handleAddPatientOpen}
+                                            >Add Patient</Button>
                                         </Grid>
                                         <Grid item xs={12} p={2}>
                                             <ButtonGroup

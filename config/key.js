@@ -1,7 +1,6 @@
 module.exports = {
     serverPort: 5000,
-    mongoURI: 'mongodb+srv://prophysioDev:Nqwy07fsmI3Co7tR@prophysiodb.ckitsge.mongodb.net/?retryWrites=true&w=majority',
-    // mongoURI: 'mongodb://127.0.0.1:27017/prophysio-db',
+    mongoURI: 'mongodb://162.212.153.81:1027/prophysio_db',
     secretOrKey: '[PROPHYSIO] SECRET OR KEY',
     serverAddress: 'localhost:3000'
 }
