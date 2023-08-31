@@ -61,6 +61,11 @@ const Patients = () => {
 
     const sendRegistrationForm = (patientId) => {
         dispatch(Actions.sendRegistrationForm(patientId, enqueueSnackbar));
+        dispatch(Actions.confirmRegistrationForm(
+            patientId,
+            { status: RegistrationFormStatus.PENDING },
+            enqueueSnackbar
+        ));
     }
 
     const sendIntakeForm = (patientId) => {
