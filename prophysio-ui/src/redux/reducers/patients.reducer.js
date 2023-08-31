@@ -1,5 +1,7 @@
 import { IntakeFormStatus, RegistrationFormStatus } from '../../config/enum';
 import {
+    PATIENTS_LOADING,
+    PATIENTS_LOADED,
     GET_PATIENTS,
     ADD_PATIENT,
     GET_WAITING_PATIENTS,
@@ -7,10 +9,12 @@ import {
     CONFIRM_REGISTRATION_FORM,
     CONFIRM_INTAKE_FORM,
     GET_REGISTRATION_FORM,
-    GET_INTAKE_FORM
+    GET_INTAKE_FORM,
+    GET_PATIENT
 } from '../types';
 
 const initialState = {
+    isLoading: false,
     patients: [],
     patient: {},
     requests: [],
@@ -22,10 +26,25 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case PATIENTS_LOADING:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case PATIENTS_LOADED:
+            return {
+                ...state,
+                isLoading: false
+            }
         case GET_PATIENTS:
             return {
                 ...state,
                 patients: action.payload
+            };
+        case GET_PATIENT:
+            return {
+                ...state,
+                patient: action.payload
             };
         case ADD_PATIENT:
             return {

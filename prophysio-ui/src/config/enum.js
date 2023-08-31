@@ -77,3 +77,11 @@ export const PatientPortalType = {
     REGISTRATION: 'Patient Registration Form',
     INTAKE: 'Patient Intake Form'
 }
+
+export const EmploymentStatus = {
+    UNKNOWN: 'Unknown',
+    EMPLOYED: 'Employed',
+    SELF_EMPLOYED: 'Self-Employed',
+    UNEMPLOYED: 'Unemployed',
+    RETIRED: 'Retired'
+}

@@ -228,6 +228,30 @@ exports.getPatient = async (req, res) => {
     res.json(patient);
 };
 
+// @route   UPDATE api/patients
+// @desc    Update Patient
+// @access  Public
+exports.updatePatient = async (req, res) => {
+    const { errors, isValid } = validatePatientInput(req.body);
+    
+    // Check Validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
+    // Update patient by id
+    const patient = await Patient.findOneAndUpdate(
+        { _id: req.body.id },
+        { $set: req.body }
+    );
+    // Check for patient
+    if (!patient) {
+        errors.msg = 'Patient not found';
+        return res.status(404).json(errors);
+    }
+    res.json(patient);
+};
+
 // @route   POST api/send-registration-form
 // @desc    Send Registration Form
 // @access  Public

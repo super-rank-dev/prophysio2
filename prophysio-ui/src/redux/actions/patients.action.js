@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../config/key';
 import {
+    PATIENTS_LOADING,
+    PATIENTS_LOADED,
     GET_ERRORS,
     GET_PATIENTS,
+    GET_PATIENT,
     ADD_PATIENT,
     CONFIRM_REGISTRATION_FORM,
     GET_WAITING_PATIENTS,
@@ -11,6 +14,18 @@ import {
     GET_REGISTRATION_FORM,
     GET_INTAKE_FORM
 } from '../types';
+
+export const setPatientsLoading = () => dispatch => {
+    dispatch({
+        type: PATIENTS_LOADING
+    });
+};
+
+export const setPatientsLoaded = () => dispatch => {
+    dispatch({
+        type: PATIENTS_LOADED
+    });
+};
 
 // Get All Patients
 export const getAllPatients = () => dispatch => {
@@ -30,6 +45,26 @@ export const getAllPatients = () => dispatch => {
         );
 };
 
+// Get All Patients
+export const getPatient = (patientId) => dispatch => {
+    dispatch(setPatientsLoading());
+    axios
+        .get(`${SERVER_ADDRESS}/api/patients/${patientId}`)
+        .then(res => {
+            dispatch({
+                type: GET_PATIENT,
+                payload: res.data
+            });
+            dispatch(setPatientsLoaded());
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 // Add Patient Request
 export const addPatient = (patient, handleClose, enqueueSnackbar) => dispatch => {
     axios
@@ -41,6 +76,21 @@ export const addPatient = (patient, handleClose, enqueueSnackbar) => dispatch =>
             })
             handleClose();
             enqueueSnackbar('New Patient Added!', { variant: 'success' });
+        })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+export const updatePatient = (patient, enqueueSnackbar) => dispatch => {
+    console.log(patient);
+    axios
+        .put(`${SERVER_ADDRESS}/api/patients`, patient)
+        .then(res => {
+            enqueueSnackbar('Patient Updated!', { variant: 'success' });
         })
         .catch(err =>
             dispatch({
@@ -158,13 +208,15 @@ export const sendRegistrationForm = (patientId, enqueueSnackbar) => dispatch => 
 
 // Get Registration Form
 export const getRegistrationForm = (patientId) => dispatch => {
+    dispatch(setPatientsLoading());
     axios
         .get(`${SERVER_ADDRESS}/api/patients/get-registration-form/${patientId}`)
         .then(res => {
             dispatch({
                 type: GET_REGISTRATION_FORM,
                 payload: res.data
-            })
+            });
+            dispatch(setPatientsLoaded());
         })
         .catch(err =>
             dispatch({

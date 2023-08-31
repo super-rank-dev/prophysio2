@@ -1,5 +1,6 @@
 class AppointmentModel {
     constructor({
+        _id,
         firstName,
         lastName,
         email,
@@ -9,6 +10,7 @@ class AppointmentModel {
         address,
         emergencyContact
     }) {
+        this.id = _id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
