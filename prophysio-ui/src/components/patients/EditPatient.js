@@ -14,15 +14,15 @@ const EditPatient = ({ handleClose, patient }) => {
             <Grid container>
                 <Grid item xs={12} md={4} p={2}>
                     <PersonalInfoCard onClickCard={() =>
-                        navigate(`/patient-profile/${patient._id}`)} />
+                        navigate(`/edit-patient-profile/${patient._id}`)} />
                 </Grid>
                 <Grid item xs={12} md={4} p={2}>
                     <RegistrationFormCard onClickCard={() =>
-                        navigate(`/patient-registration/${patient._id}`)} />
+                        navigate(`/edit-patient-registration/${patient._id}`)} />
                 </Grid>
                 <Grid item xs={12} md={4} p={2}>
                     <IntakeFormCard onClickCard={() =>
-                        navigate(`/patient-intake/${patient._id}`)} />
+                        navigate(`/edit-patient-intake/${patient._id}`)} />
                 </Grid>
             </Grid>
         </Stack>

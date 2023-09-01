@@ -14,6 +14,9 @@ const WaitingPatient = require('../models/waiting_patient');
 const { BodyPart } = require('../../config/enum');
 const patient = require('../validation/patient');
 
+const mongoose = require('mongoose');
+const { Types: { ObjectId } } = mongoose;
+
 // @route   POST api/patients
 // @desc    Register patient
 // @access  Public
@@ -218,6 +221,12 @@ exports.getPatient = async (req, res) => {
 
     const { patientId } = req.params;
 
+    // Check for patient
+    if (!ObjectId.isValid(patientId)) {
+        errors.msg = 'Invalid Patient ID';
+        return res.status(400).json(errors);
+    }
+
     // Find patient by id
     const patient = await Patient.findById(patientId);
     // Check for patient
@@ -233,7 +242,7 @@ exports.getPatient = async (req, res) => {
 // @access  Public
 exports.updatePatient = async (req, res) => {
     const { errors, isValid } = validatePatientInput(req.body);
-    
+
     // Check Validation
     if (!isValid) {
         return res.status(400).json(errors);
@@ -265,8 +274,24 @@ exports.sendRegistrationForm = async (req, res) => {
 // @desc    Get Registration Form
 // @access  Public
 exports.getRegistrationForm = async (req, res) => {
+    const errors = {};
+
     const { patientId } = req.params;
+
+    // Check Patient ID
+    if (!ObjectId.isValid(patientId)) {
+        errors.msg = 'Invalid Patient ID';
+        return res.status(400).json(errors);
+    }
+
     const patient = await Patient.findById(patientId);
+
+    // Check for patient
+    if (!patient) {
+        errors.msg = 'Patient not found';
+        return res.status(404).json(errors);
+    }
+
     const registrationForm = await RegistrationForm.findById(patient.registrationForm);
     res.json(registrationForm);
 }
@@ -284,8 +309,24 @@ exports.sendIntakeForm = async (req, res) => {
 // @desc    Get Intake Form
 // @access  Public
 exports.getIntakeForm = async (req, res) => {
+    const errors = {};
+
     const { patientId } = req.params;
+
+    // Check Patient ID
+    if (!ObjectId.isValid(patientId)) {
+        errors.msg = 'Invalid Patient ID';
+        return res.status(400).json(errors);
+    }
+
     const patient = await Patient.findById(patientId);
+
+    // Check for patient
+    if (!patient) {
+        errors.msg = 'Patient not found';
+        return res.status(404).json(errors);
+    }
+
     const intakeForm = await IntakeForm.findById(patient.intakeForm);
     res.json(intakeForm);
 }

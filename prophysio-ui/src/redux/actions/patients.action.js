@@ -12,7 +12,8 @@ import {
     CONFIRM_INTAKE_FORM,
     REMOVE_PATIENT,
     GET_REGISTRATION_FORM,
-    GET_INTAKE_FORM
+    GET_INTAKE_FORM,
+    CLEAR_ERRORS
 } from '../types';
 
 export const setPatientsLoading = () => dispatch => {
@@ -54,6 +55,9 @@ export const getPatient = (patientId) => dispatch => {
             dispatch({
                 type: GET_PATIENT,
                 payload: res.data
+            });
+            dispatch({
+                type: CLEAR_ERRORS
             });
             dispatch(setPatientsLoaded());
         })
@@ -216,6 +220,9 @@ export const getRegistrationForm = (patientId) => dispatch => {
                 type: GET_REGISTRATION_FORM,
                 payload: res.data
             });
+            dispatch({
+                type: CLEAR_ERRORS
+            });
             dispatch(setPatientsLoaded());
         })
         .catch(err =>
@@ -249,6 +256,9 @@ export const getIntakeForm = (patientId) => dispatch => {
             dispatch({
                 type: GET_INTAKE_FORM,
                 payload: res.data
+            });
+            dispatch({
+                type: CLEAR_ERRORS
             });
         })
         .catch(err =>

@@ -21,6 +21,7 @@ import Statement from './components/statement/Statement';
 import Settings from './components/settings/Settings';
 import Users from './components/users/Users';
 import ProtectedRoute from './components/layout/ProtectedRoute';
+import Status404 from './components/status/Status404';
 
 import './App.css';
 import { PatientPortalType } from './config/enum';
@@ -39,9 +40,9 @@ const App = () => {
                                 <Route path='patients' element={<Patients />} />
                                 <Route path='add-patient' element={<AddPatient />} />
                                 <Route path='add-patient-requests' element={<AddPatientRequests />} />
-                                <Route path='patient-profile/:patientId' element={<PatientProfile />} />
-                                <Route path='patient-registration/:patientId' element={<PatientRegistrationForm />} />
-                                <Route path='patient-intake/:patientId' element={<PatientIntakeForm />} />
+                                <Route path='edit-patient-profile/:patientId' element={<PatientProfile />} />
+                                <Route path='edit-patient-registration/:patientId' element={<PatientRegistrationForm />} />
+                                <Route path='edit-patient-intake/:patientId' element={<PatientIntakeForm />} />
                                 <Route path='guarantors' element={<Guarantors />} />
                                 <Route path='appointments' element={<Appointments />} />
                                 <Route path='billing' element={<Billing />} />
@@ -49,6 +50,7 @@ const App = () => {
                                 <Route path='statement' element={<Statement />} />
                                 <Route path='settings' element={<Settings />} />
                                 <Route path='users' element={<Users />} />
+                                <Route path='*' element={<Status404 />} />
                             </Route>
                         </Route>
                         <Route path='login' element={<Login />} />
