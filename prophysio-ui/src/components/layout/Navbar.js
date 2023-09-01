@@ -32,6 +32,7 @@ const Navbar = ({ handleDrawerToggle }) => {
     const onLogoutClick = () => {
         // dispatch(clearCurrentProfile);
         dispatch(Actions.logoutUser());
+        navigate('/login');
     };
 
     return (

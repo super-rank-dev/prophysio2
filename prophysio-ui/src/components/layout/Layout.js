@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Drawer from '@mui/material/Drawer';
@@ -7,9 +8,40 @@ import Toolbar from '@mui/material/Toolbar';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../../utils/setAuthToken';
+import * as Actions from '../../redux/actions';
+
 const drawerWidth = 240;
 
 function Layout(props) {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // Check for token
+        if (localStorage.jwtToken) {
+            // Set auth token header auth
+            setAuthToken(localStorage.jwtToken);
+            // Decode token and get user info and exp
+            const decoded = jwt_decode(localStorage.jwtToken);
+            // Set user and isAuthenticated
+            dispatch(Actions.setCurrentUser(decoded));
+            // Check for expired token
+            const currentTime = Date.now() / 1000;
+            if (decoded.exp < currentTime) {
+                // Logout user
+                dispatch(Actions.logoutUser());
+                // Clear current Profile
+                // dispatch(clearCurrentProfile());
+                // Redirect to login
+                navigate('/login');
+            }
+        } else {
+            navigate('/login');
+        }
+    }, [dispatch]);
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);

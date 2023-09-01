@@ -20,49 +20,49 @@ const pages = [
     {
         text: 'Dashboard',
         icon: <DashboardIcon />,
-        href: '/home'
+        href: '/'
     },
     {
         text: 'Patients',
         icon: <PeopleIcon />,
-        href: '/home/patients'
+        href: '/patients'
     },
     {
         text: 'Guarantors',
         icon: <AccountBalanceIcon />,
-        href: '/home/guarantors'
+        href: '/guarantors'
     },
     {
         text: 'Appointments',
         icon: <EventAvailableIcon />,
-        href: '/home/appointments'
+        href: '/appointments'
     },
     {
         text: 'Billing',
         icon: <PaymentIcon />,
-        href: '/home/billing'
+        href: '/billing'
     },
     {
         text: 'Invoices',
         icon: <RequestPageIcon />,
-        href: '/home/invoices'
+        href: '/invoices'
     },
     {
         text: 'Statement of Accts',
         icon: <ShoppingCartIcon />,
-        href: '/home/statement'
+        href: '/statement'
     }
 ];
 const additionalPages = [
     {
         text: 'Settings',
         icon: <SettingsIcon />,
-        href: '/home/settings'
+        href: '/settings'
     },
     {
         text: 'Users',
         icon: <SupervisedUserCircleIcon />,
-        href: '/home/users'
+        href: '/users'
     }
 ];
 

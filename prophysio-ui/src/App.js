@@ -1,9 +1,5 @@
-import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './utils/setAuthToken';
-import * as Actions from './redux/actions';
 import store from './redux';
 import Landing from './components/layout/Landing';
 import Layout from './components/layout/Layout';
@@ -31,36 +27,13 @@ import { PatientPortalType } from './config/enum';
 import { SnackbarProvider } from 'notistack';
 
 const App = () => {
-
-    useEffect(() => {
-        // Check for token
-        if (localStorage.jwtToken) {
-            // Set auth token header auth
-            setAuthToken(localStorage.jwtToken);
-            // Decode token and get user info and exp
-            const decoded = jwt_decode(localStorage.jwtToken);
-            // Set user and isAuthenticated
-            store.dispatch(Actions.setCurrentUser(decoded));
-            // Check for expired token
-            const currentTime = Date.now() / 1000;
-            if (decoded.exp < currentTime) {
-                // Logout user
-                store.dispatch(Actions.logoutUser());
-                // Clear current Profile
-                // store.dispatch(clearCurrentProfile());
-                // Redirect to login
-                window.location.href = '/login';
-            }
-        }
-    }, [store.dispatch]);
-
     return (
         <Provider store={store}>
             <SnackbarProvider>
                 <Router>
                     <Routes>
-                        <Route index element={<Landing />} />
-                        <Route path='home' element={<Layout />}>
+                        {/* <Route index element={<Landing />} /> */}
+                        <Route path='' element={<Layout />}>
                             <Route index element={<Dashboard />} />
                             <Route path='*' element={<ProtectedRoute />}>
                                 <Route path='patients' element={<Patients />} />

@@ -2,14 +2,22 @@ import { Button, Stack } from '@mui/material';
 import { ReactComponent as LogoSvg } from '../../logo.svg';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Landing = () => {
 
     const navigate = useNavigate();
-    
+    const { isAuthenticated } = useSelector(({ auth }) => (auth));
+
     useEffect(() => {
-        navigate('/home');
-    }, []);
+        if (isAuthenticated !== undefined) {
+            if (isAuthenticated) {
+                navigate('/');
+            } else {
+                navigate('/login');
+            }
+        }
+    }, [isAuthenticated, navigate]);
 
     return (
         <div className="bgimg">
@@ -24,7 +32,7 @@ const Landing = () => {
                             variant='contained'
                             color='secondary'
                             sx={{ margin: 'auto' }}
-                            onClick={() => navigate('/home')}
+                            onClick={() => navigate('')}
                         >
                             Getting Started
                         </Button>

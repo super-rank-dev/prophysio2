@@ -32,7 +32,7 @@ export const loginUser = (userData, navigate) => dispatch => {
             const decoded = jwt_decode(token);
             // Set current user
             dispatch(setCurrentUser(decoded));
-            navigate('/home');
+            navigate('/');
         })
         .catch(err =>
             dispatch({
