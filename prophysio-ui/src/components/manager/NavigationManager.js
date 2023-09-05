@@ -1,35 +1,20 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
+import Loading from '../global/Loading';
 
-const delay = {
-    '/': 2000,
-    '/patients': 500,
-    '/guarantors': 500,
-    '/appointments': 500,
-    '/billing': 500,
-    '/invoices': 500,
-    '/statement': 500,
-    '/settings': 2000,
-    '/users': 500
-};
+const NavigationManager = ({ children }) => {
 
-const NavigationManager = ({ setIsLoading }) => {
+    const { isLoading } = useSelector(({ loading }) => (loading));
+    const displayStyle = isLoading ? { display: 'none' } : {};
 
-    const path = useLocation();
-    const [sign, setSign] = useState({});
-
-    useEffect(() => {
-        // if (!sign[path.pathname]) {
-        //     setIsLoading(true);
-        //     setTimeout(() => setIsLoading(false), delay[path.pathname]);
-        //     setSign({
-        //         ...sign,
-        //         [path.pathname]: true
-        //     });
-        // }
-    }, [path]);
-
-    return (<></>);
+    return (
+        <>
+            {isLoading && (<Loading />)}
+            {React.Children.map(children, (child) =>
+                React.cloneElement(child, { style: displayStyle })
+            )}
+        </>
+    );
 }
 
 export default NavigationManager;

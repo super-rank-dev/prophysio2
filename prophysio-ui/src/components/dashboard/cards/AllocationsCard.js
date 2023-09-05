@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-const AllocationsCard = () => {
+const AllocationsCard = ({ imageLoaded, setImageLoaded }) => {
     return (
         <Card>
             <CardActionArea>
@@ -14,6 +14,7 @@ const AllocationsCard = () => {
                     height="140"
                     image="https://source.unsplash.com/random?allocations"
                     alt="allocations"
+                    onLoad={() => setImageLoaded({ ...imageLoaded, allocations: true })}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">

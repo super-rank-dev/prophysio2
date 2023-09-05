@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import loadingReducer from './loading.reducer';
 import authReducer from './auth.reducer';
 import usersReducer from './users.reducer';
 import patientsReducer from './patients.reducer';
@@ -10,6 +11,7 @@ import errorReducer from './error.reducer';
 import snackbarReducer from './snackbar.reducer';
 
 const rootReducer = combineReducers({
+    loading: loadingReducer,
     auth: authReducer,
     users: usersReducer,
     patients: patientsReducer,

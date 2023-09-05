@@ -1,0 +1,2 @@
+export const PAGE_LOADING = '[PROPHYSIO] PAGE_LOADING';
+export const PAGE_LOADED = '[PROPHYSIO] PAGE_LOADED';

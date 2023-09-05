@@ -1,3 +1,4 @@
+export * from './loading.action';
 export * from './auth.action';
 export * from './users.action';
 export * from './patients.action';

@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-const AbsenteeSummaryCard = () => {
+const AbsenteeSummaryCard = ({ imageLoaded, setImageLoaded }) => {
     return (
         <Card>
             <CardActionArea>
@@ -14,6 +14,7 @@ const AbsenteeSummaryCard = () => {
                     height="140"
                     image="https://source.unsplash.com/random?absentee"
                     alt="absentee"
+                    onLoad={() => setImageLoaded({ ...imageLoaded, absenteeSummary: true })}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">

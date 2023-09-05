@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-const PractitionerTargetsCard = () => {
+const PractitionerTargetsCard = ({ imageLoaded, setImageLoaded }) => {
     return (
         <Card>
             <CardActionArea>
@@ -14,6 +14,7 @@ const PractitionerTargetsCard = () => {
                     height="140"
                     image="https://source.unsplash.com/random?target"
                     alt="practitioner target"
+                    onLoad={() => setImageLoaded({ ...imageLoaded, practitionerTargets: true })}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">

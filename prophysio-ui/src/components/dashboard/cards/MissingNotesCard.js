@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-const MissingNotesCard = () => {
+const MissingNotesCard = ({ imageLoaded, setImageLoaded }) => {
     return (
         <Card>
             <CardActionArea>
@@ -14,6 +14,7 @@ const MissingNotesCard = () => {
                     height="140"
                     image="https://source.unsplash.com/random?notes"
                     alt="missing notes"
+                    onLoad={() => setImageLoaded({ ...imageLoaded, missingNotes: true })}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">

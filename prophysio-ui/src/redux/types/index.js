@@ -1,3 +1,4 @@
+export * from './loading.type';
 export * from './auth.type';
 export * from './users.type';
 export * from './patients.type';

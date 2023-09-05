@@ -10,13 +10,13 @@ const Loading = () => {
             alignItems: 'center',
             margin: '7rem 0'
         }}>
-            <LogoSvg />
+            <LogoSvg width={'300px'} />
             <LinearProgress sx={{
-                width: '30vw',
+                width: '400px   ',
                 display: { xs: 'none', md: 'block' }
             }} />
             <LinearProgress sx={{
-                width: '100vw',
+                width: '340px',
                 display: { xs: 'block', md: 'none' }
             }} />
         </Box>

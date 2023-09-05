@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-const UpcomingBirthdaysCard = () => {
+const UpcomingBirthdaysCard = ({ imageLoaded, setImageLoaded }) => {
     return (
         <Card>
             <CardActionArea>
@@ -14,6 +14,7 @@ const UpcomingBirthdaysCard = () => {
                     height="140"
                     image="https://source.unsplash.com/random?birthday"
                     alt="birthday"
+                    onLoad={() => setImageLoaded({ ...imageLoaded, upcomingBirthdays: true })}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
