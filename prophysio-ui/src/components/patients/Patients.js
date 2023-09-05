@@ -22,7 +22,6 @@ const Patients = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [currentPatient, setCurrentPatient] = useState();
-    const { enqueueSnackbar } = useSnackbar();
 
     const dispatch = useDispatch();
 
@@ -60,25 +59,23 @@ const Patients = () => {
     const handleEditPatientClose = () => setOpenEditPatient(false);
 
     const sendRegistrationForm = (patientId) => {
-        dispatch(Actions.sendRegistrationForm(patientId, enqueueSnackbar));
+        dispatch(Actions.sendRegistrationForm(patientId));
         dispatch(Actions.confirmRegistrationForm(
             patientId,
-            { status: RegistrationFormStatus.PENDING },
-            enqueueSnackbar
+            { status: RegistrationFormStatus.PENDING }
         ));
     }
 
     const sendIntakeForm = (patientId) => {
-        dispatch(Actions.sendIntakeForm(patientId, enqueueSnackbar));
+        dispatch(Actions.sendIntakeForm(patientId));
         dispatch(Actions.confirmIntakeForm(
             patientId,
-            { status: IntakeFormStatus.PENDING },
-            enqueueSnackbar
+            { status: IntakeFormStatus.PENDING }
         ));
     }
 
     const removePatient = (patient) => {
-        dispatch(Actions.removePatient(patient, enqueueSnackbar));
+        dispatch(Actions.removePatient(patient));
     }
 
     return (
@@ -163,7 +160,7 @@ const Patients = () => {
                                             </Stack>
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            <Stack sx={{ display: 'block' }}>
+                                            <Stack sx={{ display: 'block', width: '5rem' }}>
                                                 <IconButton onClick={() => handleEditPatientOpen(row)}><EditIcon /></IconButton>
                                                 <IconButton onClick={() => removePatient(row)}><DeleteIcon /></IconButton>
                                             </Stack>

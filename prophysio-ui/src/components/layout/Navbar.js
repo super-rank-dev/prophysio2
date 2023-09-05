@@ -55,10 +55,10 @@ const Navbar = ({ handleDrawerToggle }) => {
                     component="a"
                     href="/"
                     sx={{
+                        mt: 0.5,
                         mr: 2,
                         flexGrow: 1,
                         fontFamily: 'Algerian',
-                        fontStyle: 'italic',
                         letterSpacing: '.3rem',
                         color: 'inherit',
                         textDecoration: 'none',
@@ -71,7 +71,7 @@ const Navbar = ({ handleDrawerToggle }) => {
                     Prophysio
                 </Typography>
                 <Typography
-                    variant="h6"
+                    variant="h5"
                     noWrap
                     component="a"
                     href="/"
@@ -79,7 +79,6 @@ const Navbar = ({ handleDrawerToggle }) => {
                         mr: 2,
                         flexGrow: 1,
                         fontFamily: 'Algerian',
-                        fontStyle: 'italic',
                         letterSpacing: '.3rem',
                         color: 'inherit',
                         textDecoration: 'none',

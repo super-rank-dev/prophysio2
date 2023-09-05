@@ -1,0 +1,1 @@
+export const SET_SNACKBAR = '[PROPHYSIO] SET_SNACKBAR';

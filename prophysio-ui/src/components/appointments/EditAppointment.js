@@ -14,7 +14,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { makeStyles } from '@mui/styles';
 import * as Actions from '../../redux/actions';
-import { AppointmentStatus } from '../../config/enum';
+import AppointmentModel from '../../models/appointment.model';
+import { AppointmentStatusLabel, AppointmentStatusLink } from '../../config/enum';
 import { Delete } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 
@@ -47,8 +48,6 @@ const EditAppointment = ({ open, handleClose }) => {
 
     const classes = useStyles();
 
-    const { enqueueSnackbar } = useSnackbar();
-    
     const [isVertical, setIsVertical] = useState(false);
 
     const dispatch = useDispatch();
@@ -76,15 +75,25 @@ const EditAppointment = ({ open, handleClose }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(Actions.editAppointment({
-            ...appointment,
-            startTime: new Date(appointment.startTime).toISOString(),
-            endTime: new Date(appointment.endTime).toISOString()
-        }, handleClose, enqueueSnackbar));
+        const data = new FormData(event.currentTarget);
+        const appointmentData = new AppointmentModel({
+            _id: appointment.id,
+            branchId: data.get('branch'),
+            serviceId: data.get('service'),
+            practitionerId: data.get('practitioner'),
+            roomId: data.get('room'),
+            chargedAmount: data.get('chargedAmount'),
+            paidAmount: data.get('paidAmount'),
+            startTime: new Date(data.get('startTime')).toISOString(),
+            endTime: new Date(data.get('endTime')).toISOString(),
+            patientId: data.get('patient'),
+            status: data.get('status')
+        });
+        dispatch(Actions.editAppointment(appointmentData, handleClose));
     };
 
     const handleRemove = () => {
-        dispatch(Actions.removeAppointment(appointment.id, handleClose, enqueueSnackbar));
+        dispatch(Actions.removeAppointment(appointment.id, handleClose));
     };
 
     return (
@@ -122,13 +131,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                     label="Branch"
                                                     type="branch"
                                                     id="branch"
-                                                    value={appointment.branchId}
-                                                    onChange={e => dispatch(
-                                                        Actions.getAppointment({
-                                                            ...appointment,
-                                                            branchId: e.target.value
-                                                        })
-                                                    )}
+                                                    defaultValue={appointment.branchId}
                                                 >
                                                     {branches.map(branch => (
                                                         <MenuItem key={branch._id} value={branch._id}>{branch.name}</MenuItem>
@@ -147,13 +150,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                     label="Service"
                                                     type="service"
                                                     id="service"
-                                                    value={appointment.serviceId}
-                                                    onChange={e => dispatch(
-                                                        Actions.getAppointment({
-                                                            ...appointment,
-                                                            serviceId: e.target.value
-                                                        })
-                                                    )}
+                                                    defaultValue={appointment.serviceId}
                                                 >
                                                     {services.map(service => (
                                                         <MenuItem key={service._id} value={service._id}>{service.name}</MenuItem>
@@ -172,13 +169,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                     label="Practitioner"
                                                     type="practitioner"
                                                     id="practitioner"
-                                                    value={appointment.practitionerId}
-                                                    onChange={e => dispatch(
-                                                        Actions.getAppointment({
-                                                            ...appointment,
-                                                            practitionerId: e.target.value
-                                                        })
-                                                    )}
+                                                    defaultValue={appointment.practitionerId}
                                                 >
                                                     {users.map(user => (
                                                         <MenuItem key={user._id} value={user._id}>{`${user.firstName} ${user.lastName}`}</MenuItem>
@@ -197,13 +188,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                     label="Room"
                                                     type="room"
                                                     id="room"
-                                                    value={appointment.roomId}
-                                                    onChange={e => dispatch(
-                                                        Actions.getAppointment({
-                                                            ...appointment,
-                                                            roomId: e.target.value
-                                                        })
-                                                    )}
+                                                    defaultValue={appointment.roomId}
                                                 >
                                                     {rooms.map(room => (
                                                         <MenuItem key={room._id} value={room._id}>{room.name}</MenuItem>
@@ -224,13 +209,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                 size='small'
                                                 error={error.chargedAmount}
                                                 helperText={error.chargedAmount}
-                                                value={appointment.chargedAmount}
-                                                onChange={e => dispatch(
-                                                    Actions.getAppointment({
-                                                        ...appointment,
-                                                        chargedAmount: e.target.value
-                                                    })
-                                                )}
+                                                defaultValue={appointment.chargedAmount}
                                             />
                                         </Grid>
                                         <Grid item xs={12} md={6} px={2}>
@@ -243,13 +222,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                 name="paidAmount"
                                                 type='number'
                                                 size='small'
-                                                value={appointment.paidAmount}
-                                                onChange={e => dispatch(
-                                                    Actions.getAppointment({
-                                                        ...appointment,
-                                                        paidAmount: e.target.value
-                                                    })
-                                                )}
+                                                defaultValue={appointment.paidAmount}
                                             />
                                         </Grid>
                                         <Grid item xs={12} px={2}>
@@ -261,13 +234,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                 label="Start Time"
                                                 name="startTime"
                                                 size='small'
-                                                value={dayjs(appointment.startTime)}
-                                                onChange={v => dispatch(
-                                                    Actions.getAppointment({
-                                                        ...appointment,
-                                                        startTime: v
-                                                    })
-                                                )}
+                                                defaultValue={dayjs(appointment.startTime)}
                                             />
                                         </Grid>
                                         <Grid item xs={12} px={2}>
@@ -279,13 +246,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                 label="End Time"
                                                 name="endTime"
                                                 size='small'
-                                                value={dayjs(appointment.endTime)}
-                                                onChange={v => dispatch(
-                                                    Actions.getAppointment({
-                                                        ...appointment,
-                                                        endTime: v
-                                                    })
-                                                )}
+                                                defaultValue={dayjs(appointment.endTime)}
                                             />
                                         </Grid>
                                         <Grid item xs={12} p={2}>
@@ -298,13 +259,7 @@ const EditAppointment = ({ open, handleClose }) => {
                                                     label="Patient"
                                                     type="patient"
                                                     id="patient"
-                                                    value={appointment.patientId}
-                                                    onChange={e => dispatch(
-                                                        Actions.getAppointment({
-                                                            ...appointment,
-                                                            patientId: e.target.value
-                                                        })
-                                                    )}
+                                                    defaultValue={appointment.patientId}
                                                 >
                                                     {patients.map(patient => (
                                                         <MenuItem key={patient._id} value={patient._id}>{`${patient.firstName} ${patient.lastName}`}</MenuItem>
@@ -324,18 +279,11 @@ const EditAppointment = ({ open, handleClose }) => {
                                                     type="status"
                                                     id="status"
                                                     fullWidth
-                                                    value={appointment.status}
-                                                    onChange={e => dispatch(
-                                                        Actions.getAppointment({
-                                                            ...appointment,
-                                                            status: e.target.value
-                                                        })
-                                                    )}
+                                                    defaultValue={appointment.status}
                                                 >
-                                                    <MenuItem key={AppointmentStatus.BOOKED} value={AppointmentStatus.BOOKED}>Booked</MenuItem>
-                                                    <MenuItem key={AppointmentStatus.SHOWED_UP} value={AppointmentStatus.SHOWED_UP}>Showed Up</MenuItem>
-                                                    <MenuItem key={AppointmentStatus.NO_SHOW} value={AppointmentStatus.NO_SHOW}>No Show</MenuItem>
-                                                    <MenuItem key={AppointmentStatus.CANCELLED} value={AppointmentStatus.CANCELLED}>Cancelled</MenuItem>
+                                                    {appointment.status && AppointmentStatusLink[appointment.status].map(status => (
+                                                        <MenuItem key={status} value={status}>{AppointmentStatusLabel[status]}</MenuItem>
+                                                    ))}
                                                 </Select>
                                                 <FormHelperText>{error.status}</FormHelperText>
                                             </FormControl>

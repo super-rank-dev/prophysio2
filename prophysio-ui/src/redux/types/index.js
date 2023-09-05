@@ -6,3 +6,4 @@ export * from './services.type';
 export * from './branches.type';
 export * from './rooms.type';
 export * from './error.type';
+export * from './snackbar.type';

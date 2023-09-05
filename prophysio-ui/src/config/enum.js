@@ -7,14 +7,47 @@ export const AppointmentStatus = {
     BOOKED: 'APPOINTMENT_BOOKED',
     SHOWED_UP: 'APPOINTMENT_SHOWED_UP',
     NO_SHOW: 'APPOINTMENT_NO_SHOW',
-    CANCELLED: 'APPOINTMENT_CANCELLED'
+    CANCELLED: 'APPOINTMENT_CANCELLED',
+    SEEN: 'APPOINTMENT_SEEN'
+}
+
+export const AppointmentStatusLink = {
+    [AppointmentStatus.BOOKED]: [
+        AppointmentStatus.BOOKED,
+        AppointmentStatus.SHOWED_UP,
+        AppointmentStatus.NO_SHOW,
+        AppointmentStatus.CANCELLED
+    ],
+    [AppointmentStatus.SHOWED_UP]: [
+        AppointmentStatus.SHOWED_UP,
+        AppointmentStatus.SEEN
+    ],
+    [AppointmentStatus.NO_SHOW]: [
+        AppointmentStatus.NO_SHOW,
+        AppointmentStatus.CANCELLED
+    ],
+    [AppointmentStatus.CANCELLED]: [
+        AppointmentStatus.CANCELLED
+    ],
+    [AppointmentStatus.SEEN]: [
+        AppointmentStatus.SEEN
+    ]
+}
+
+export const AppointmentStatusLabel = {
+    [AppointmentStatus.BOOKED]: 'Booked',
+    [AppointmentStatus.SHOWED_UP]: 'Showed Up',
+    [AppointmentStatus.NO_SHOW]: 'No Show',
+    [AppointmentStatus.CANCELLED]: 'Cancelled',
+    [AppointmentStatus.SEEN]: 'Seen'
 }
 
 export const AppointmentBgColor = {
-    [AppointmentStatus.BOOKED]: '#3399CC',
-    [AppointmentStatus.SHOWED_UP]: '#009933',
+    [AppointmentStatus.BOOKED]: '#33CCFF',
+    [AppointmentStatus.SHOWED_UP]: '#CCEE00',
     [AppointmentStatus.NO_SHOW]: '#C3C3C3',
     [AppointmentStatus.CANCELLED]: '#FF8080',
+    [AppointmentStatus.SEEN]: '#009933'
 }
 
 export const IdType = {

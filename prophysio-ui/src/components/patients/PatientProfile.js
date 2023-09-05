@@ -15,7 +15,6 @@ import {
     Typography
 } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
-import { enqueueSnackbar } from "notistack";
 import * as Actions from '../../redux/actions';
 import Patient from '../../models/patient.model';
 import StatusMsg from '../status/StatusMsg';
@@ -46,7 +45,6 @@ const PatientProfile = () => {
             address: data.get('address'),
             emergencyContact: data.get('emergencyContact')
         });
-        dispatch(Actions.updatePatient(patient, enqueueSnackbar));
     }
 
     return (

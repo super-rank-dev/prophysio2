@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client-install": "npm install --prefix prophysio-ui",
+    "client-install": "npm install --legacy-peer-deps --prefix prophysio-ui",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix prophysio-ui",

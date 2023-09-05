@@ -6,7 +6,8 @@ import {
     GET_APPOINTMENT,
     ADD_APPOINTMENT,
     UPDATE_APPOINTMENT,
-    REMOVE_APPOINTMENT
+    REMOVE_APPOINTMENT,
+    SET_SNACKBAR
 } from '../types';
 
 // Get All Appointments
@@ -36,7 +37,7 @@ export const getAppointment = (appointment) => dispatch => {
 };
 
 // Add Appointment
-export const addAppointment = (appointment, handleClose, enqueueSnackbar) => dispatch => {
+export const addAppointment = (appointment, handleClose) => dispatch => {
     axios
         .post(`${SERVER_ADDRESS}/api/appointments`, appointment)
         .then((res) => {
@@ -45,7 +46,13 @@ export const addAppointment = (appointment, handleClose, enqueueSnackbar) => dis
                 payload: res.data
             });
             handleClose();
-            enqueueSnackbar('New Appointment Created!', { variant: 'success' });
+            dispatch({
+                type: SET_SNACKBAR,
+                payload: {
+                    content: 'New Appointment Created!',
+                    options: { variant: 'success' }
+                }
+            });
         })
         .catch(err =>
             dispatch({
@@ -56,7 +63,7 @@ export const addAppointment = (appointment, handleClose, enqueueSnackbar) => dis
 };
 
 // Edit Appointment
-export const editAppointment = (appointment, handleClose, enqueueSnackbar) => dispatch => {
+export const editAppointment = (appointment, handleClose) => dispatch => {
     axios
         .put(`${SERVER_ADDRESS}/api/appointments`, appointment)
         .then(() => {
@@ -65,7 +72,13 @@ export const editAppointment = (appointment, handleClose, enqueueSnackbar) => di
                 payload: appointment
             });
             handleClose();
-            enqueueSnackbar('Appointment Updated!', { variant: 'success' });
+            dispatch({
+                type: SET_SNACKBAR,
+                payload: {
+                    content: 'Appointment Updated!',
+                    options: { variant: 'success' }
+                }
+            });
         })
         .catch(err =>
             dispatch({
@@ -76,7 +89,7 @@ export const editAppointment = (appointment, handleClose, enqueueSnackbar) => di
 }
 
 // Remove Appointment
-export const removeAppointment = (appointmentId, handleClose, enqueueSnackbar) => dispatch => {
+export const removeAppointment = (appointmentId, handleClose) => dispatch => {
     axios
         .delete(`${SERVER_ADDRESS}/api/appointments/${appointmentId}`)
         .then(() => {
@@ -85,7 +98,13 @@ export const removeAppointment = (appointmentId, handleClose, enqueueSnackbar) =
                 payload: appointmentId
             });
             handleClose();
-            enqueueSnackbar('Appointment Removed!', { variant: 'success' });
+            dispatch({
+                type: SET_SNACKBAR,
+                payload: {
+                    content: 'Appointment Removed!',
+                    options: { variant: 'success' }
+                }
+            });
         })
         .catch(err =>
             dispatch({

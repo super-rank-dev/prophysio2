@@ -12,7 +12,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 import * as Actions from '../../redux/actions';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 function Layout(props) {
 

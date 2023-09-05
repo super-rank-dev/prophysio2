@@ -12,7 +12,6 @@ import StatusMsg from '../status/StatusMsg';
 const PatientIntakeForm = () => {
 
     const { patientId } = useParams();
-    const { enqueueSnackbar } = useSnackbar();
 
     const dispatch = useDispatch();
     const [intakeFormData, setIntakeFormData] = useState([]);
@@ -53,8 +52,7 @@ const PatientIntakeForm = () => {
         event.preventDefault();
         dispatch(Actions.confirmIntakeForm(
             patientId,
-            { status: IntakeFormStatus.ACCEPTED, data: intakeFormData },
-            enqueueSnackbar
+            { status: IntakeFormStatus.ACCEPTED, data: intakeFormData }
         ));
     }
 

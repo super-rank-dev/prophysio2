@@ -120,7 +120,7 @@ exports.saveWaitingPatients = async (req, res) => {
         const newWaitingPatient = new WaitingPatient({ patient: patient._id });
         await newWaitingPatient.save();
     };
-    res.json({ success: true });
+    this.getWaitingPatients(req, res);
 }
 
 // @route   POST api/confirm-registration-form

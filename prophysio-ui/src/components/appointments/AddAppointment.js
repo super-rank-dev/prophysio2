@@ -26,7 +26,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { makeStyles } from '@mui/styles';
-import { useSnackbar } from 'notistack';
 import { AppointmentStatus } from '../../config/enum';
 import AppointmentModel from '../../models/appointment.model';
 import * as Actions from '../../redux/actions';
@@ -58,8 +57,6 @@ const useStyles = makeStyles({
 
 const AddAppointment = ({ open, handleClose, handleAddPatientOpen }) => {
 
-    const { enqueueSnackbar } = useSnackbar();
-
     const classes = useStyles();
 
     const [isVertical, setIsVertical] = useState(false);
@@ -90,7 +87,7 @@ const AddAppointment = ({ open, handleClose, handleAddPatientOpen }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const appointment = new AppointmentModel({
+        const appointmentData = new AppointmentModel({
             branchId: data.get('branch'),
             serviceId: data.get('service'),
             practitionerId: data.get('practitioner'),
@@ -102,7 +99,7 @@ const AddAppointment = ({ open, handleClose, handleAddPatientOpen }) => {
             patientId: data.get('patient'),
             status: AppointmentStatus.BOOKED
         });
-        dispatch(Actions.addAppointment(appointment, handleClose, enqueueSnackbar));
+        dispatch(Actions.addAppointment(appointmentData, handleClose));
     };
 
     return (

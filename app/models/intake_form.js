@@ -8,7 +8,23 @@ const intakeFormSchema = new mongoose.Schema({
         required: true,
         default: IntakeFormStatus.UNKNOWN
     },
-    data: [{
+    upperExtremity: [{
+        bodyPart: {
+            type: String
+        },
+        questionnaire: [String],
+        objective: [String],
+        specialTest: [String]
+    }],
+    lowerExtremity: [{
+        bodyPart: {
+            type: String
+        },
+        questionnaire: [String],
+        objective: [String],
+        specialTest: [String]
+    }],
+    spine: [{
         bodyPart: {
             type: String
         },

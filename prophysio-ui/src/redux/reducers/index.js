@@ -7,6 +7,7 @@ import servicesReducer from './services.reducer';
 import branchsReducer from './branches.reducer';
 import roomsReducer from './rooms.reducer';
 import errorReducer from './error.reducer';
+import snackbarReducer from './snackbar.reducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     services: servicesReducer,
     branches: branchsReducer,
     rooms: roomsReducer,
-    error: errorReducer
+    error: errorReducer,
+    snackbar: snackbarReducer
 });
 
 export default rootReducer;

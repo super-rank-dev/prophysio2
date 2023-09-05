@@ -78,7 +78,7 @@ const Sidebar = () => {
                 {pages.map(({ text, icon, href }) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton onClick={() => navigate(href)}>
-                            <ListItemIcon>
+                            <ListItemIcon sx={{ margin: '0.5rem 0 0.5rem 1rem' }}>
                                 {icon}
                             </ListItemIcon>
                             <ListItemText primary={text} />
@@ -91,7 +91,7 @@ const Sidebar = () => {
                 {additionalPages.map(({ text, icon, href }) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton onClick={() => navigate(href)}>
-                            <ListItemIcon>
+                            <ListItemIcon sx={{ margin: '0.5rem 0 0.5rem 1rem' }}>
                                 {icon}
                             </ListItemIcon>
                             <ListItemText primary={text} />

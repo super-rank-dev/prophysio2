@@ -16,7 +16,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import * as Actions from '../../redux/actions';
 import Patient from '../../models/patient.model';
-import { enqueueSnackbar } from "notistack";
 
 const AddPatient = ({ handleClose }) => {
 
@@ -37,7 +36,7 @@ const AddPatient = ({ handleClose }) => {
             address: data.get('address'),
             emergencyContact: data.get('emergencyContact')
         });
-        dispatch(Actions.addPatient(patient, handleClose, enqueueSnackbar));
+        dispatch(Actions.addPatient(patient, handleClose));
     }
 
     return (
